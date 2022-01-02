@@ -3,7 +3,8 @@ import 'package:project_ecocial/inherited_widgets/inherited_post_model.dart';
 import 'package:project_ecocial/models/post_model.dart';
 import 'package:project_ecocial/models/user_model.dart';
 import 'package:intl/intl.dart';
-import '../post_page.dart';
+import '../comments_screen.dart';
+import '../full_post_screen.dart';
 
 class PostCard extends StatelessWidget {
 
@@ -18,7 +19,7 @@ class PostCard extends StatelessWidget {
       onTap: () {
         Navigator.push(context, MaterialPageRoute(
             builder: (BuildContext context) {
-              return PostPage(postData: postData,);
+              return FullPostScreen(postData: postData,);
             }
         ));
       },
@@ -139,7 +140,12 @@ class Reactions extends StatelessWidget {
           ),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CommentsScreen(postData: postData)),
+            );
+          },
           icon: Icon(Icons.comment),
           color: Color.fromRGBO(101, 171, 200, 1),
         ),

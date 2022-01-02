@@ -10,8 +10,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    // final AuthService _auth = AuthService();
-
     return Scaffold(
       drawer: NavigationDrawerWidget(),
       appBar: AppBar(
@@ -32,11 +30,17 @@ class HomeScreen extends StatelessWidget {
         foregroundColor: Colors.white,
         backgroundColor: Color.fromRGBO(90, 155, 115, 1),
       ),
-      body: ListView.builder(
-        itemCount: 5,
-        itemBuilder: (BuildContext context, int index) {
-          return PostCard(postData: TestValues.posts[0],);
+      body: RefreshIndicator(
+        onRefresh: () {
+          return Future.delayed(Duration(seconds: 0));
         },
+        color: Color.fromRGBO(101, 171, 200, 1),
+        child: ListView.builder(
+          itemCount: 5,
+          itemBuilder: (BuildContext context, int index) {
+            return PostCard(postData: TestValues.posts[0],);
+          },
+        ),
       ),
       // body: Container(
       //   child: ElevatedButton(
