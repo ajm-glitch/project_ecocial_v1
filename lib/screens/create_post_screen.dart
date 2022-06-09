@@ -1,9 +1,11 @@
-// import 'package:firebase_database/firebase_database.dart';
+import 'dart:async';
 import 'dart:io';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:project_ecocial/database/posting_db.dart';
+import 'package:project_ecocial/database/user_db.dart';
 import 'package:project_ecocial/screens/smaller%20widgets/constants.dart';
 
 
@@ -16,17 +18,30 @@ class CreatePostScreen extends StatefulWidget {
 
 class _CreatePostScreenState extends State<CreatePostScreen> {
 
-  //final database = FirebaseDatabase.instance.reference();
-
   File? image;
+  String imagePath = "";
+
+  final titleController = TextEditingController();
+  final descriptionController = TextEditingController();
+
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    titleController.dispose();
+    descriptionController.dispose();
+    super.dispose();
+  }
 
   Future pickImage(ImageSource source) async {
     try {
       final image = await ImagePicker().pickImage(source: source);
-      if (image == null) return;
-
+      if (image == null) {
+        return;
+      }
       final imageTemporary = File(image.path);
       setState(() => this.image = imageTemporary);
+      imagePath = image.path;
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
     }
@@ -51,9 +66,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 30),
-                Text('Add a subject:'),
+                Text('Add a title:'),
                 SizedBox(height: 20),
                 TextField(
+                  controller: titleController,
                   decoration:
                       textInputDecoration.copyWith(hintText: 'Enter text...'),
                 ),
@@ -61,6 +77,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 Text('Add a description:'),
                 SizedBox(height: 20),
                 TextField(
+                  controller: descriptionController,
                   decoration:
                       textInputDecoration.copyWith(hintText: 'Enter text...'),
                 ),
@@ -116,7 +133,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 ),
                 SizedBox(height: 50),
                 Text('Images selected:'),
-                SizedBox(height: 20),
+                SizedBox(height: 20), //Image.file(File(path))
                 image != null
                     ? Image.file(
                   image!,
@@ -166,20 +183,29 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     SizedBox(width: 20),
                     RaisedButton(
                       padding: EdgeInsets.fromLTRB(38.0, 14.0, 38.0, 14.0),
-                      onPressed: () {
-                        // try {
-                        //   final nextOrder = <String, dynamic> {
-                        //     'title': 'I planted ABC',
-                        //     'subtitle': 'Yesterday I had nothing to do...',
-                        //     'user': 'User A',
-                        //     'time': DateTime.now().millisecondsSinceEpoch
-                        //   };
-                        //   database.child('posts').push().set(nextOrder);
-                        //   print('Post has been added!');
-                        // } catch(e) {
-                        //   print("error! $e");
-                        // }
-                        _showAlertDialog(context);
+                      onPressed: () async {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (context) =>
+                              Center(child: CircularProgressIndicator()),
+                        );
+                        UserDb userDb = new UserDb();
+                        final currentUser = FirebaseAuth.instance.currentUser;
+                        String? uid = currentUser?.uid;
+                        String username = await userDb.getUsernameFromDb(uid!);
+                        if (username == null) {
+                          username = "sample username"; // change
+                        }
+                        PostingDb postingObject = new PostingDb();
+                        bool success = await postingObject.post(titleController.text, descriptionController.text, username, imagePath, uid);
+                        if (success) {
+                          Navigator.pop(context);
+                          _showSuccessAlertDialog(context);
+                        }
+                        else {
+                          _showFailureAlertDialog(context);
+                        }
                       },
                       child: Text(
                         'Post',
@@ -202,9 +228,12 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   }
 }
 
-_showAlertDialog(BuildContext context) {
+_showSuccessAlertDialog(BuildContext context) {
   Widget closeButton = IconButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pop(context);
+        Navigator.pop(context); // KINDA GOT IT TO WORK
+      },
       icon: Icon(
         Icons.close,
       )
@@ -243,3 +272,31 @@ _showAlertDialog(BuildContext context) {
   );
 }
 
+_showFailureAlertDialog(BuildContext context) {
+  Widget closeButton = IconButton(
+      onPressed: () {
+        Navigator.pop(context);
+      },
+      icon: Icon(
+        Icons.close,
+      )
+  );
+  AlertDialog alert = AlertDialog(
+    title: Text(
+      "Something went wrong...unable to post.",
+      style: TextStyle(
+        color: Colors.black,
+        fontSize: 24,
+      ),
+    ),
+    actions: [
+      closeButton,
+    ],
+  );
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}

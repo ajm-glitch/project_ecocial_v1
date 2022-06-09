@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-class NavigationDrawerWidget extends StatelessWidget {
+class NavigationDrawerWidget extends StatefulWidget {
   const NavigationDrawerWidget({Key? key}) : super(key: key);
 
+  @override
+  State<NavigationDrawerWidget> createState() => _NavigationDrawerWidgetState();
+}
+
+class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -10,13 +15,26 @@ class NavigationDrawerWidget extends StatelessWidget {
         color: Colors.white,
         child: ListView(
           children: [
+            Image(
+              image: AssetImage('assets/ecocialIcon.png'),
+              width: 200,
+              height: 200,
+            ),
             buildMenuItem(
                 text: "Home",
-                onTapped: () => openScreen(context, '/home')),
+                onTapped: () => openScreen(context, '/home_screen')),
             Divider(),
             buildMenuItem(
                 text: "Account Settings",
-                onTapped: () => openScreen(context, '/account_settings')),
+                onTapped: () => openScreen(context, '/account_settings_screen')),
+            Divider(),
+            buildMenuItem(
+                text: "My Posts",
+                onTapped: () {
+                  setState(() {
+                    openScreen(context, '/my_posts_screen');
+                  });
+                }),
           ],
         ),
       ),
@@ -40,14 +58,11 @@ class NavigationDrawerWidget extends StatelessWidget {
 
   void openScreen(BuildContext context, String route) {
     if (route == '/home') {
-      // How does this work? '/home' isn't said anywhere. Does it automatically
-      // recognize it as the home route?
       Navigator.pop(context);
     }
     else {
       Navigator.pushNamed(context, route);
     }
   }
-
 }
 

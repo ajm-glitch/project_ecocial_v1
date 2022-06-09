@@ -1,19 +1,96 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:project_ecocial/models/post_model.dart';
 
-class db {
+class PostingDb {
 
-  final _db = FirebaseDatabase.instance.reference(); //database reference object
+  late List<String> postIds;
+  late PostModel postModel;
 
-  void addData(String data) {
-    _db.push().set({'name': data, 'comment': 'A good season'});
+  final databaseRef = FirebaseDatabase.instance.reference(); //database reference object
+
+  Future<bool> post(String title, String description, String username, String imagePath, String? uid) async {
+    bool success = false;
+    final postRef = databaseRef.child("posts");
+    postModel = createPost(title, description, username, imagePath, uid!);
+    var postedId = "";
+    try {
+      var justPosted = postRef.push();
+      postedId = justPosted.key;
+      justPosted.set({
+        'title': postModel.title,
+        'body': postModel.body,
+        'imagePath': postModel.imagePath,
+        'postTime': postModel.postTime.toString(),
+        'username': postModel.username,
+        'uid': postModel.uid,
+        'postOrder': postModel.postOrder,
+        // 'likedUids': postModel.likedUids,
+      }); // in future, add other instance fields too
+      success = true;
+      postModel.id = postedId;
+    } catch(e) {
+      print("error!: " + e.toString());
+      success = false;
+    }
+    if (success) {
+      try {
+        final currentUser = FirebaseAuth.instance.currentUser;
+        String? id = currentUser?.uid;
+        // get postId of the post just posted.
+        postModel.id = postedId;
+        // get username of current user
+        // find user reference in db using username
+        final userRef = databaseRef.child('users').child(id!).child('postIds');
+        // read postIds as a list from the db
+        List<Object?> postIdList = await getPostIdListFromDb();
+        int length = postIdList.length;
+        // push new updated one to db.
+        try {
+          userRef.update({
+            length.toString(): postModel.id
+          });
+        } catch(e) {
+          print("error! " + e.toString());
+        }
+
+      } catch(e) {
+        final postToBeDeletedRef = postRef.child(postedId);
+        try {
+          postToBeDeletedRef.remove();
+        } catch(e) {
+          print("error! " + e.toString());
+        }
+        print("error! " + e.toString());
+        success = false;
+      }
+    }
+    return success;
   }
 
-  void printFirebase() {
-    _db.once().then((DataSnapshot snapshot) {
-      print('Data : ${snapshot.value}');
-    });
+  createPost(String title, String description, String username, String imagePath, String uid) {
+    PostModel post = new PostModel(
+      title: title,
+      body: description,
+      imagePath: imagePath,
+      postTime: DateTime.now(),
+      username: username,
+      uid: uid,
+      postOrder: -DateTime.now().millisecondsSinceEpoch,
+    );
+    return post;
   }
 
-// Snapshot[“id”] = “jfshfhfkshkh”
+  Future<List<Object?>> getPostIdListFromDb() async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    String? id = currentUser?.uid;
+    final userRef = databaseRef.child('users').child(id!).child('postIds');
+    DataSnapshot dataSnapshot = await userRef.get();
+    var data = dataSnapshot.value;
+    if (data == null) {
+      return [];
+    }
+    return data;
+  }
 
 }

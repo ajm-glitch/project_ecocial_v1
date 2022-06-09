@@ -1,11 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:project_ecocial/database/user_db.dart';
+
 
 class GoogleSignInProvider extends ChangeNotifier {
 
   final googleSignIn = GoogleSignIn();
   late bool _isSigningIn;
+  late String userEmail;
 
   GoogleSignInProvider() {
     _isSigningIn = false;
@@ -18,32 +21,38 @@ class GoogleSignInProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future login() async {
-    _isSigningIn = true;
-    final user = await googleSignIn.signIn();
-    if (user == null) {
-      isSigningIn = false;
-      return;
-    }
-    else {
-      final googleAuth = await user.authentication;
+  Future logIn() async {
+    try {
+      _isSigningIn = true;
+      final user = await googleSignIn.signIn();
+      if (user == null) {
+        isSigningIn = false;
+        return;
+      }
+      else {
+        final googleAuth = await user.authentication;
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
 
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      await FirebaseAuth.instance.signInWithCredential(credential);
-      isSigningIn = false;
+        await FirebaseAuth.instance.signInWithCredential(credential);
+        isSigningIn = false;
+      }
+    } catch(e) {
+      print(e.toString());
     }
+
+    UserDb userDb = new UserDb();
+    userDb.pushUserModelToDb();
+
+    notifyListeners();
+
   }
 
-  void logout() async {
-    // print("before logged out");
+  Future<void> logOut() async {
     await googleSignIn.disconnect();
-    // print("finished disconnect. about to instance.signout");
-    FirebaseAuth.instance.signOut();
-    print("logged out yay");
+    await FirebaseAuth.instance.signOut();
   }
 
 }

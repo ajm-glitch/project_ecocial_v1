@@ -1,18 +1,29 @@
-import 'package:project_ecocial/models/comment_model.dart';
-import 'package:project_ecocial/models/user_model.dart';
-
 class PostModel {
 
-  final String id;
   final String title;
   final String body;
-  final String imageURL;
+  final String imagePath;
   final DateTime postTime;
-  final int numComments;
-  final int numLikes;
-  final UserModel author;
-  final List<CommentModel> comments;
+  final String username;
+  final String uid;
+  final int postOrder;
+  //List<String> likedUids = [];
+  late String id;
 
-  PostModel({required this.id, required this.title, required this.body, required this.imageURL, required this.postTime, required this.numComments, required this.numLikes, required this.author, required this.comments});
+  PostModel({required this.title, required this.body, required this.imagePath, required this.postTime, required this.username, required this.uid, required this.postOrder});
+
+  // converts json to PostModel
+  factory PostModel.fromRTDB(Map<String, dynamic> data) {
+    return PostModel(
+      title: data['title'] ?? 'a title',
+      body: data['body'] ?? 'a body',
+      imagePath: data['imagePath'] ?? "",
+      postTime: DateTime.parse(data['postTime']),
+      //postTime: DateTime.now(),
+      username: data['username'] ?? 'a username',
+      uid: data['uid'] ?? 'a uid',
+      postOrder: data['postOrder'],
+    );
+  }
 
 }

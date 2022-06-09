@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:project_ecocial/authentication/google_sign_in_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../database/notifiers/my_posts_notifier.dart';
+
 class GoogleSignUpButtonWidget extends StatelessWidget {
   const GoogleSignUpButtonWidget({Key? key}) : super(key: key);
 
@@ -21,10 +23,11 @@ class GoogleSignUpButtonWidget extends StatelessWidget {
         borderSide: BorderSide(color: Color.fromRGBO(90, 155, 115, 1),),
         textColor: Colors.black,
         icon: FaIcon(FontAwesomeIcons.google, color: Colors.red),
-        onPressed: () {
+        onPressed: () async {
           final provider =
           Provider.of<GoogleSignInProvider>(context, listen: false);
-          provider.login();
+          await provider.logIn();
+          Provider.of<MyPostsNotifier>(context, listen: false).listenToPosts();
         },
       ),
     );

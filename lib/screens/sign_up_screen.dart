@@ -6,7 +6,6 @@ class SignUpWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Entered sign up widget");
     return Center(
       child: Column(
         children: [

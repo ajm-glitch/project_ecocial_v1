@@ -10,51 +10,45 @@ class MyPostsNotifier extends ChangeNotifier {
 
   List<PostModel> get myPostsList => _myPostsList;
   final _dbReference = FirebaseDatabase.instance.reference();
-  late StreamSubscription<Event> _postStream;
-
-  set myPostsList(List<PostModel> myPostsList) {
-    _myPostsList = myPostsList;
-    notifyListeners();
-  }
+  late StreamSubscription<Event> _myPostStream;
 
   MyPostsNotifier() {
-    _listenToPosts();
+   listenToPosts();
   }
 
-  void _listenToPosts() {
-
+  void listenToPosts() {
     final currentUser = FirebaseAuth.instance.currentUser;
     String? id = currentUser?.uid;
-    print("id for my_posts: " + id!);
-    _postStream = _dbReference.child("posts").orderByChild("postTime").onValue.listen((event) { // onChildAdded gives error
+    _myPostStream = _dbReference.child("posts").orderByChild('postOrder').onValue.listen((event) {
       if (event.snapshot.value == null) {
         print("no posts available");
         return;
       }
       else {
         final allPosts = Map<String, dynamic>.from(event.snapshot.value);
-        myPostsList = allPosts.values.map((postsAsJSON) =>
+        _myPostsList = allPosts.values.map((postsAsJSON) =>
             PostModel.fromRTDB(Map<String, dynamic>.from(postsAsJSON))
         ).toList();
         for (var i = 0; i < myPostsList.length; i++) {
-          myPostsList[i].id = allPosts.keys.elementAt(i);
+          _myPostsList[i].id = allPosts.keys.elementAt(i);
         }
-        myPostsList.removeWhere((element) {
+        _myPostsList.removeWhere((element) {
           if (element.uid != id) {
             return true;
           }
           return false;
         });
-
+        // for (var j = 0; j < _myPostsList.length; j++) {
+        //   print(_myPostsList.elementAt(j).postOrder);
+        // }
         notifyListeners();
       }
     });
   }
 
-  @override
-  void dispose() {
-    _postStream.cancel();
-    super.dispose();
+  void resetMyPostsList() {
+    print("dispose called");
+    _myPostStream.cancel();
+    _myPostsList = [];
   }
-
 }

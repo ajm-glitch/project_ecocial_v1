@@ -1,29 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:project_ecocial/database/notifiers/my_posts_notifier.dart';
+import 'package:project_ecocial/database/notifiers/post_notifier.dart';
+import 'package:project_ecocial/screens/my_posts_screen.dart';
 import 'package:project_ecocial/screens/account_settings_screen.dart';
-import 'package:project_ecocial/screens/home_screen.dart';
+import 'package:project_ecocial/screens/home_feed_screen.dart';
 import 'package:project_ecocial/screens/wrapper.dart';
 import 'package:provider/provider.dart';
-
 import 'authentication/google_sign_in_provider.dart';
+import 'database/notifiers/comment_notifier.dart';
+import 'package:flutter/services.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => GoogleSignInProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => GoogleSignInProvider()),
+        ChangeNotifierProvider(create: (_) => PostNotifier()),
+        ChangeNotifierProvider(create: (_) => MyPostsNotifier()),
+        ChangeNotifierProvider(create: (_) => CommentNotifier()),
+      ],
       child: MaterialApp(
         home: Wrapper(),
-        routes: { // CREATE ACCOUNT SETTINGS
-          '/home' : (context) => HomeScreen(),
-          '/account_settings': (context) => AccountSettings(),
+        routes: {
+          '/home_screen' : (context) => HomeFeed(),
+          '/account_settings_screen': (context) => AccountSettings(),
+          '/my_posts_screen': (context) => MyPostsScreen(),
         },
         theme: ThemeData(
           primaryColor: Color.fromRGBO(101, 171, 200, 1),

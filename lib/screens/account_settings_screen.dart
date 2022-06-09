@@ -1,13 +1,51 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_ecocial/authentication/google_sign_in_provider.dart';
+import 'package:project_ecocial/database/user_db.dart';
 import 'package:project_ecocial/screens/smaller%20widgets/constants.dart';
 import 'package:provider/provider.dart';
+import 'package:toast/toast.dart';
 
-class AccountSettings extends StatelessWidget {
+
+class AccountSettings extends StatefulWidget {
   const AccountSettings({Key? key}) : super(key: key);
 
   @override
+  _AccountSettingsState createState() => _AccountSettingsState();
+
+}
+
+class _AccountSettingsState extends State<AccountSettings> {
+
+  String username = "test";
+  late TextEditingController usernameController = TextEditingController(text: "");
+
+  @override
+  initState() {
+    super.initState();
+    final currentUser = FirebaseAuth.instance.currentUser;
+    getUsername(currentUser?.uid).then((value) {
+      if (mounted) {
+        setState(() {
+          if (value == null) {
+            UserDb userDb = new UserDb();
+            this.username = userDb.getUsernameFromEmail()!;
+          }
+          else {
+            this.username = value;
+          }
+          usernameController = TextEditingController(text: this.username);
+        });
+        deactivate();
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    ToastContext().init(context);
+    UserDb userDb = new UserDb();
+    // setUsername();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -27,58 +65,72 @@ class AccountSettings extends StatelessWidget {
               SizedBox(height: 30),
               Text('Username:'),
               SizedBox(height: 20),
-              TextField(
-                decoration:
-                textInputDecoration.copyWith(hintText: 'Replace with first part of email'),
+              TextFormField(
+                controller: usernameController,
+                decoration: textInputDecoration
               ),
               SizedBox(height: 40),
-              // Text('Location:'),
-              // SizedBox(height: 20),
-              // TextField(
-              //   decoration:
-              //   textInputDecoration.copyWith(hintText: 'Replace with first part of email'),
-              // ),
-              // SizedBox(height: 40),
-              Center(
-                child: FlatButton(
-                  minWidth: 100,
-                  height: 46,
-                  onPressed: () {
-                    final provider = Provider.of<GoogleSignInProvider>(context, listen:false);
-                    provider.logout();
-                    // https://stackoverflow.com/questions/59576495/flutter-provider-nested-navigation
-                    Navigator.pop(context);
-                  },
-                  color: Colors.white,
-                  child: Text(
-                    'Log out',
-                    style: TextStyle(
-                      color: Color.fromRGBO(90, 155, 115, 1),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  RaisedButton(
+                    padding: EdgeInsets.fromLTRB(38.0, 14.0, 38.0, 14.0),
+                    onPressed: () async {
+                      String username = usernameController.text;
+                      bool result1 = userDb.pushUsernameToDb(username);
+                      bool result2 = await userDb.updateUsernameInPreviousPostsDb(username);
+                      if (result1 == true && result2 == true) {
+                        Toast.show("Saved!", duration: Toast.lengthShort);
+                      }
+                      else {
+                        print("error updating username");
+                      }
+                    },
+                    child: Text(
+                      'Save',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    color: Color.fromRGBO(90, 155, 115, 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
                     ),
                   ),
-                  shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                          color: Color.fromRGBO(90, 155, 115, 1),
-                          width: 2.0,
-                          style: BorderStyle.solid),
-                      borderRadius: BorderRadius.circular(50)),
+                  SizedBox(width: 60,),
+                  TextButton(
+                    onPressed: () async {
+                      final provider = Provider.of<GoogleSignInProvider>(
+                          context,
+                          listen: false);
+                           try {
+                        await provider.logOut();
+                        Navigator.pop(context);
+                      } catch(e) {
+                        print('logging out error: ' + e.toString());
+                      }
 
-                ),
-              ),
+                    },
+                    // color: Colors.white,
+                    child: Text(
+                      'Log out',
+                      style: TextStyle(
+                        color: Color.fromRGBO(90, 155, 115, 1),
+                      ),
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ),
       ),
-      // body: Center(
-      //     child: ElevatedButton(
-      //         onPressed: () {
-      //           final provider =
-      //           Provider.of<GoogleSignInProvider>(context, listen:false);
-      //           provider.logout();
-      //         },
-      //         child: Text('Log out')
-      //     )
-      // ),
     );
   }
+
+  Future<String> getUsername(String? id) async {
+    UserDb userDb = new UserDb();
+    return userDb.getUsernameFromDb(id);
+  }
+
 }
