@@ -52,9 +52,8 @@ class _HomeFeedState extends State<HomeFeed> {
         onRefresh: () async {
           bool temp = await postNotifier.reloadPosts();
           setState(() {
-            noPostsAvailable = temp;
+            noPostsAvailable = !temp;
           });
-          return Future.delayed(Duration(seconds: 2));
         },
         color: Color.fromRGBO(101, 171, 200, 1),
         child: noPostsAvailable ? noPosts : Consumer<PostNotifier>(
