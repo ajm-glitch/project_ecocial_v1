@@ -3,10 +3,24 @@ import 'package:project_ecocial/database/notifiers/my_posts_notifier.dart';
 import 'package:project_ecocial/screens/smaller%20widgets/postCard.dart';
 import 'package:provider/provider.dart';
 
-class MyPostsScreen extends StatelessWidget {
+bool noMyPostsAvailable = false;
+
+class MyPostsScreen extends StatefulWidget {
+
+  @override
+  State<MyPostsScreen> createState() => _MyPostsScreenState();
+}
+
+class _MyPostsScreenState extends State<MyPostsScreen> {
+
+  Widget noMyPosts = Container(
+    child: Center(child: Text('it seems like you have no posts yet'))
+  );
 
   @override
   Widget build(BuildContext context) {
+    print("noMyPostsAvailable?: " + noMyPostsAvailable.toString());
+    //MyPostsNotifier myPostsNotifier = new MyPostsNotifier();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -18,13 +32,16 @@ class MyPostsScreen extends StatelessWidget {
         iconTheme: IconThemeData(color: Colors.white),
       ),
       body: RefreshIndicator(
-        onRefresh: () {
-          return Future.delayed(Duration(seconds: 2));
+        // onRefresh: () async {
+      onRefresh: () {
+          // bool temp  = await myPostsNotifier.reloadMyPosts();
+          // setState(() {
+          //   noMyPostsAvailable = temp;
+          // });
+        return 5 as Future;
         },
         color: Color.fromRGBO(101, 171, 200, 1),
-        child: Consumer<MyPostsNotifier>(
-          // dispose: (context, value) => value.dispose(),
-          builder: (context, model, child) {
+        child: noMyPostsAvailable ? noMyPosts : Consumer<MyPostsNotifier>(builder: (context, model, child) {
             return Column(
               children: [
                 Expanded(

@@ -6,19 +6,18 @@ class DeletePostDb {
   final databaseRef = FirebaseDatabase.instance.reference();
 
   Future<bool> deletePost(String postId) async {
-    bool success = true;
+    bool success = false;
     final postToBeDeletedRef = databaseRef.child("posts").child(postId);
     try {
       postToBeDeletedRef.remove();
     } catch(e) {
       success = false;
       print("error! " + e.toString());
+      return success;
     }
-    if (success) {
-      final currentUser = FirebaseAuth.instance.currentUser;
-      String? uid = currentUser?.uid;
-      removePostIdFromUser(uid!, postId);
-    }
+    final currentUser = FirebaseAuth.instance.currentUser;
+    String? uid = currentUser?.uid;
+    success = await removePostIdFromUser(uid!, postId);
     return success;
   }
 
@@ -26,41 +25,31 @@ class DeletePostDb {
     bool success = false;
     try {
       var postIdListRef = databaseRef.child("users").child(uid).child("postIds");
-      // await postIdListRef.get().then((snapshot) {
-      //   final data = snapshot.value as List;
-      //   for (var i = 0; i < data.length; i++) {
-      //     if (data[i] == postId) {
-      //       final postIdRef = postIdListRef.equalTo(postId).once().then((DataSnapshot dataSnapshot) {
-      //         String? key = dataSnapshot.key;
-      //         print("key: " + key!);
-      //         //postIdListRef.child(key).remove();
-      //       });
-      //       success = true;
-      //       break;
-      //     }
-      //   }
-      // });
-
       var postIdRef = await postIdListRef.once().then((DataSnapshot dataSnapshot) {
         var postIdList = dataSnapshot.value;
         int index = postIdList.indexOf(postId);
         postIdList.removeAt(index);
         repushPostIdList(postIdList, uid);
       });
-
     } catch(e) {
       print("error! " + e.toString());
       success = false;
     }
+    success = true;
     return success;
   }
 
   bool repushPostIdList(List postIdList, String uid) {
     bool success = true;
     DatabaseReference userRef = databaseRef.child("users").child(uid);
-    userRef.update({
-      "postIds": postIdList
-    });
+    try {
+      userRef.update({
+        "postIds": postIdList
+      });
+    } catch(e) {
+      success = false;
+      print("error! " + e.toString());
+    }
     return success;
   }
 

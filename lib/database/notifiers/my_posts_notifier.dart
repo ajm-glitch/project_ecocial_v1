@@ -4,6 +4,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:project_ecocial/models/post_model.dart';
 
+import '../../screens/my_posts_screen.dart';
+
 class MyPostsNotifier extends ChangeNotifier {
 
   List<PostModel> _myPostsList = [];
@@ -16,9 +18,14 @@ class MyPostsNotifier extends ChangeNotifier {
    listenToPosts();
   }
 
-  void listenToPosts() {
+  Future<bool> listenToPosts() async {
     final currentUser = FirebaseAuth.instance.currentUser;
     String? id = currentUser?.uid;
+    bool result = await anyMyPostsExist(id!);
+    if (!result) {
+      noMyPostsAvailable = true;
+      return result;
+    }
     _myPostStream = _dbReference.child("posts").orderByChild('postOrder').onValue.listen((event) {
       if (event.snapshot.value == null) {
         print("no posts available");
@@ -38,17 +45,23 @@ class MyPostsNotifier extends ChangeNotifier {
           }
           return false;
         });
-        // for (var j = 0; j < _myPostsList.length; j++) {
-        //   print(_myPostsList.elementAt(j).postOrder);
-        // }
         notifyListeners();
       }
     });
+    return result;
   }
 
   void resetMyPostsList() {
-    print("dispose called");
     _myPostStream.cancel();
     _myPostsList = [];
+  }
+  Future<bool> reloadMyPosts() async {
+    print("reloadMyPosts called");
+    return await listenToPosts();
+  }
+
+  Future<bool> anyMyPostsExist(String uid) async {
+    DataSnapshot snapshot = await _dbReference.child("users").child(uid).child("postIds").get();
+    return snapshot.value != null;
   }
 }

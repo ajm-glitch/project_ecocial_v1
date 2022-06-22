@@ -6,6 +6,9 @@ import '../../models/post_model.dart';
 import '../comments_screen.dart';
 import 'flagIconForPost.dart';
 
+int numLikes = 0;
+bool isLiked = false;
+
 class PostReactionsWidget extends StatefulWidget {
 
   final PostModel postData;
@@ -20,8 +23,6 @@ class PostReactionsWidget extends StatefulWidget {
 class _PostReactionsWidgetState extends State<PostReactionsWidget> {
 
   LikesDb likesDb = new LikesDb();
-  bool isLiked = false;
-  int numLikes = 0;
 
   @override
   void initState() {
@@ -38,7 +39,7 @@ class _PostReactionsWidgetState extends State<PostReactionsWidget> {
     likesDb.getNumLikes(widget.postData.id).then((value) {
       if (mounted) {
         setState(() {
-          this.numLikes = value;
+          numLikes = value;
         });
         deactivate();
       }
@@ -69,7 +70,7 @@ class _PostReactionsWidgetState extends State<PostReactionsWidget> {
         ),
         SizedBox(width: 20),
         Text(
-          this.numLikes.toString(),
+          numLikes.toString(),
           style: TextStyle(
             color: Color.fromRGBO(117, 117, 117, 1),
           ),
@@ -81,7 +82,7 @@ class _PostReactionsWidgetState extends State<PostReactionsWidget> {
             setState(() {
               isLiked = !isLiked;
             });
-            updateLikesUI(isLiked);
+            updateNumLikesUI(isLiked);
           },
           icon: isLiked ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
           color: Color.fromRGBO(101, 171, 200, 1),
@@ -92,7 +93,7 @@ class _PostReactionsWidgetState extends State<PostReactionsWidget> {
     );
   }
 
-  void updateLikesUI(bool isLiked) {
+  void updateNumLikesUI(bool isLiked) {
     if (isLiked) {
       setState(() {
         numLikes += 1;

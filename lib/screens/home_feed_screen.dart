@@ -5,10 +5,29 @@ import 'package:project_ecocial/screens/smaller%20widgets/postCard.dart';
 import 'package:provider/provider.dart';
 import 'navigation/navigation_drawer_widget.dart';
 
-class HomeFeed extends StatelessWidget {
+bool noPostsAvailable = false;
+
+class HomeFeed extends StatefulWidget {
+
+  @override
+  State<HomeFeed> createState() => _HomeFeedState();
+
+}
+
+class _HomeFeedState extends State<HomeFeed> {
+
+  void initState() { // Perhaps don't need? check later
+    PostNotifier postNotifier = new PostNotifier();
+    postNotifier.reloadPosts();
+  }
+
+  Widget noPosts = Container(
+    child: Center(child: Text('no posts available')),
+  );
 
   @override
   Widget build(BuildContext context) {
+    PostNotifier postNotifier = new PostNotifier();
     return Scaffold(
       drawer: NavigationDrawerWidget(),
       appBar: AppBar(
@@ -30,12 +49,15 @@ class HomeFeed extends StatelessWidget {
         backgroundColor: Color.fromRGBO(90, 155, 115, 1),
       ),
       body: RefreshIndicator(
-        onRefresh: () {
+        onRefresh: () async {
+          bool temp = await postNotifier.reloadPosts();
+          setState(() {
+            noPostsAvailable = temp;
+          });
           return Future.delayed(Duration(seconds: 2));
-          //getPosts()
         },
         color: Color.fromRGBO(101, 171, 200, 1),
-        child: Consumer<PostNotifier>(
+        child: noPostsAvailable ? noPosts : Consumer<PostNotifier>(
           builder: (context, model, child) {
             return Column(
               children: [
@@ -50,7 +72,6 @@ class HomeFeed extends StatelessWidget {
             );
           },
         ),
-
       ),
     );
   }

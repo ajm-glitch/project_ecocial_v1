@@ -1,5 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:toast/toast.dart';
 import '../../database/delete_post_db.dart';
+import '../my_posts_screen.dart';
 
 Widget deletePostWidget(BuildContext context, postId) {
   IconButton deletePostIcon = IconButton(
@@ -21,20 +25,28 @@ _showDeleteAlertDialog(BuildContext context, String postId) {
   );
   Widget yesButton = TextButton(
     onPressed: () async {
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) =>
-            Center(child: CircularProgressIndicator()),
-      );
+       showDialog(
+         context: context,
+         barrierDismissible: false,
+         builder: (context) =>
+             Center(), // child: CircularProgressIndicator()
+       );
+      Navigator.pop(context);
+      Navigator.pop(context);
       DeletePostDb deletePostDb = new DeletePostDb();
       bool success = await deletePostDb.deletePost(postId);
       if (success) {
-        Navigator.pop(context);
-        Navigator.pop(context);
-        // show ui for success
+        final currentUser = FirebaseAuth.instance.currentUser;
+        String? uid = currentUser?.uid;
+        bool myPostsExist = await anyMyPostsExist(uid!);
+        if (!myPostsExist) {
+          Navigator.pop(context);
+          noMyPostsAvailable = true;
+          Navigator.push(context, MaterialPageRoute(builder: (context) => MyPostsScreen()));
+        }
       }
       else {
+        Toast.show("Unable to delete post!", duration: Toast.lengthShort);
         print('error in deleting post');
       }
     },
@@ -50,7 +62,7 @@ _showDeleteAlertDialog(BuildContext context, String postId) {
     ),
     actions: [
       cancelButton,
-      yesButton
+      yesButton,
     ],
   );
   showDialog(
@@ -59,5 +71,12 @@ _showDeleteAlertDialog(BuildContext context, String postId) {
       return alert;
     },
   );
+}
+
+Future<bool> anyMyPostsExist(String uid) async {
+  final _dbReference = FirebaseDatabase.instance.reference();
+  DataSnapshot snapshot = await _dbReference.child("users").child(uid).child("postIds").get();
+  print(snapshot.value.toString());
+  return snapshot.value != null;
 }
 

@@ -7,33 +7,33 @@ class LikesDb {
   bool isLiked = false;
 
   Future<bool> checkLiked(String? uid, String postId) async {
-    // DatabaseReference realtimeDb = FirebaseDatabase.instance.reference();
-    // var ref = realtimeDb.child('posts').child(postId).child('likedUids');
-    // DataSnapshot datasnapshot = await ref.get();
-    // if (datasnapshot.value == null) {
-    //   isLiked = false;
-    // }
-    // else {
-    //   var likedUidsList = datasnapshot.value as Map;
-    //   for (var i = 0; i < likedUidsList.keys.length; i++) {
-    //     String key = likedUidsList.keys.elementAt(i);
-    //     if (likedUidsList[key]['uid'] == uid) {
-    //       isLiked = true;
-    //       return isLiked;
-    //     }
-    //   }
-    // }
-    likeSetter(postId, uid!);
-
-    DatabaseReference databaseRef = FirebaseDatabase.instance.reference();
-    databaseRef.child('posts').child(postId).child('likedUids').onValue.listen((event) {
-      likeSetter(postId, uid);
-      print("listener triggered");
-      // // likeSetter(postId, uid);
-      // Map<String, dynamic> likeStatus = jsonDecode(jsonEncode(event.snapshot.value));
-      // // likeStatus.values, for loop
-      // print('likeStatus: ' + likeStatus.keys.elementAt(0));
-    });
+    DatabaseReference realtimeDb = FirebaseDatabase.instance.reference();
+    var ref = realtimeDb.child('posts').child(postId).child('likedUids');
+    DataSnapshot datasnapshot = await ref.get();
+    if (datasnapshot.value == null) {
+      isLiked = false;
+    }
+    else {
+      var likedUidsList = datasnapshot.value as Map;
+      for (var i = 0; i < likedUidsList.keys.length; i++) {
+        String key = likedUidsList.keys.elementAt(i);
+        if (likedUidsList[key]['uid'] == uid) {
+          isLiked = true;
+          return isLiked;
+        }
+      }
+    }
+    // likeSetter(postId, uid!);
+    //
+    // DatabaseReference databaseRef = FirebaseDatabase.instance.reference();
+    // databaseRef.child('posts').child(postId).child('likedUids').onValue.listen((event) {
+    //   likeSetter(postId, uid);
+    //   //print("listener triggered");
+    //   // // likeSetter(postId, uid);
+    //   // Map<String, dynamic> likeStatus = jsonDecode(jsonEncode(event.snapshot.value));
+    //   // // likeStatus.values, for loop
+    //   // print('likeStatus: ' + likeStatus.keys.elementAt(0));
+    // });
     return isLiked;
   }
 
@@ -53,6 +53,7 @@ class LikesDb {
         }
       }
     }
+    print("isLiked set by likeSetter: " + isLiked.toString());
   }
 
   Future<bool> handleLikePost(String? uid, String postId) async {

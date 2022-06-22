@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project_ecocial/database/posting_db.dart';
 import 'package:project_ecocial/database/user_db.dart';
+import 'package:project_ecocial/screens/home_feed_screen.dart';
+import 'package:project_ecocial/screens/my_posts_screen.dart';
 import 'package:project_ecocial/screens/smaller%20widgets/constants.dart';
 
 
@@ -202,6 +204,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                         if (success) {
                           Navigator.pop(context);
                           _showSuccessAlertDialog(context);
+                          noPostsAvailable = false;
+                          noMyPostsAvailable = false;
+                         // print("noPostsAvailable after posting: " + noPostsAvailable.toString());
                         }
                         else {
                           _showFailureAlertDialog(context);
@@ -232,7 +237,9 @@ _showSuccessAlertDialog(BuildContext context) {
   Widget closeButton = IconButton(
       onPressed: () {
         Navigator.pop(context);
-        Navigator.pop(context); // KINDA GOT IT TO WORK
+        Navigator.pop(context);
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => HomeFeed()));
       },
       icon: Icon(
         Icons.close,
