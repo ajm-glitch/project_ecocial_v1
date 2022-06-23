@@ -7,13 +7,13 @@ import '../comments_screen.dart';
 import 'flagIconForPost.dart';
 
 int numLikes = 0;
-bool isLiked = false;
+// bool isLikedByMe = false;
 
 class PostReactionsWidget extends StatefulWidget {
 
   final PostModel postData;
   final bool isMyPost;
-  const PostReactionsWidget({Key? key, required this.postData, required this.isMyPost}) : super(key: key);
+  const PostReactionsWidget({Key? key, required this.postData, required this.isMyPost }) : super(key: key);
 
 
   @override
@@ -23,15 +23,20 @@ class PostReactionsWidget extends StatefulWidget {
 class _PostReactionsWidgetState extends State<PostReactionsWidget> {
 
   LikesDb likesDb = new LikesDb();
+  late bool isLikedByMe = false;
+
+  // create function with listener for likes. onValue Changes call checkLiked and reset isLikedByMe using setstate
 
   @override
   void initState() {
     super.initState();
+    //bool temp = false;
     final currentUser = FirebaseAuth.instance.currentUser;
     likesDb.checkLiked(currentUser?.uid, widget.postData.id).then((value) {
       if (mounted) {
         setState(() {
-          isLiked = value;
+          // temp = value;
+          isLikedByMe = value;
         });
         deactivate();
       }
@@ -77,14 +82,14 @@ class _PostReactionsWidgetState extends State<PostReactionsWidget> {
         ),
         IconButton(
           onPressed: () async {
-            likesDb.handleLikePost(currentUser?.uid, widget.postData.id);
-            //likesDb.checkLiked(currentUser?.uid, widget.postData.id);
+            await likesDb.handleLikePost(currentUser?.uid, widget.postData.id);
+            var temp = await likesDb.checkLiked(currentUser?.uid, widget.postData.id);
             setState(() {
-              isLiked = !isLiked;
+              isLikedByMe = temp;
             });
-            updateNumLikesUI(isLiked);
+            //updateNumLikesUI(isLikedByMe);
           },
-          icon: isLiked ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
+          icon: isLikedByMe ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
           color: Color.fromRGBO(101, 171, 200, 1),
         ),
         SizedBox(width: 20),
@@ -92,18 +97,18 @@ class _PostReactionsWidgetState extends State<PostReactionsWidget> {
       ],
     );
   }
-
-  void updateNumLikesUI(bool isLiked) {
-    if (isLiked) {
-      setState(() {
-        numLikes += 1;
-      });
-    }
-    else {
-      setState(() {
-        numLikes -= 1;
-      });
-    }
-  }
+  //
+  // void updateNumLikesUI(bool isLiked) {
+  //   if (isLiked) {
+  //     setState(() {
+  //       numLikes += 1;
+  //     });
+  //   }
+  //   else {
+  //     setState(() {
+  //       numLikes -= 1;
+  //     });
+  //   }
+  // }
 
 }

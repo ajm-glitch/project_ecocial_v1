@@ -10,7 +10,6 @@ import 'package:project_ecocial/screens/home_feed_screen.dart';
 import 'package:project_ecocial/screens/my_posts_screen.dart';
 import 'package:project_ecocial/screens/smaller%20widgets/constants.dart';
 
-
 class CreatePostScreen extends StatefulWidget {
   const CreatePostScreen({Key? key}) : super(key: key);
 
@@ -206,7 +205,6 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                           _showSuccessAlertDialog(context);
                           noPostsAvailable = false;
                           noMyPostsAvailable = false;
-                         // print("noPostsAvailable after posting: " + noPostsAvailable.toString());
                         }
                         else {
                           _showFailureAlertDialog(context);

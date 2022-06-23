@@ -19,6 +19,7 @@ class FullPostScreen extends StatefulWidget {
 class _FullPostScreenState extends State<FullPostScreen> {
 
   LikesDb likesDb = new LikesDb();
+  late bool isLikedByMe;
 
   @override
   void initState() {
@@ -28,7 +29,7 @@ class _FullPostScreenState extends State<FullPostScreen> {
       if (mounted) {
         setState(() {
           print("value: " + value.toString());
-          isLiked = value;
+          isLikedByMe = value;
         });
         deactivate();
       }

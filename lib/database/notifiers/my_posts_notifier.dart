@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:project_ecocial/models/post_model.dart';
-
 import '../../screens/my_posts_screen.dart';
 
 class MyPostsNotifier extends ChangeNotifier {
