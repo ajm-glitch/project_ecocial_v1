@@ -48,29 +48,20 @@ class _HomeFeedState extends State<HomeFeed> {
         foregroundColor: Colors.white,
         backgroundColor: Color.fromRGBO(90, 155, 115, 1),
       ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          bool temp = await postNotifier.reloadPosts();
-          setState(() {
-            noPostsAvailable = !temp;
-          });
-        },
-        color: Color.fromRGBO(101, 171, 200, 1),
-        child: noPostsAvailable ? noPosts : Consumer<PostNotifier>(
-          builder: (context, model, child) {
-            return Column(
-              children: [
-                Expanded(
-                  child: ListView(
-                    children: [
-                      ...model.postList.map((postData) => PostCard(postData: postData, isMyPost: false,))
-                    ],
-                  ),
+      body: noPostsAvailable ? noPosts : Consumer<PostNotifier>(
+        builder: (context, model, child) {
+          return Column(
+            children: [
+              Expanded(
+                child: ListView(
+                  children: [
+                    ...model.postList.map((postData) => PostCard(postData: postData, isMyPost: false,))
+                  ],
                 ),
-              ],
-            );
-          },
-        ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_ecocial/screens/account_settings_screen.dart';
 
 class NavigationDrawerWidget extends StatefulWidget {
   const NavigationDrawerWidget({Key? key}) : super(key: key);
@@ -33,6 +34,14 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                 onTapped: () {
                   setState(() {
                     openScreen(context, '/my_posts_screen');
+                  });
+                }),
+            Divider(),
+            buildMenuItem(
+                text: "Test Screen",
+                onTapped: () {
+                  setState(() {
+                    openScreen(context, '/test_screen');
                   });
                 }),
           ],
