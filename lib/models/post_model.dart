@@ -7,7 +7,6 @@ class PostModel {
   final String username;
   final String uid;
   final int postOrder;
-  //List<String> likedUids = [];
   late String id;
 
   PostModel({required this.title, required this.body, required this.imagePath, required this.postTime, required this.username, required this.uid, required this.postOrder});

@@ -24,6 +24,7 @@ class _PostReactionsWidgetState extends State<PostReactionsWidget> {
 
   LikesDb likesDb = new LikesDb();
   bool isLikedByMe = false;
+  int numLikes = 0;
 
   @override
   void initState() {
@@ -79,8 +80,10 @@ class _PostReactionsWidgetState extends State<PostReactionsWidget> {
         IconButton(
           onPressed: () async {
             await likesDb.handleLikePost(currentUser?.uid, widget.postData.id);
+            int tempNumLikes = await likesDb.getNumLikes(widget.postData.id);
             setState(() {
               isLikedByMe = !isLikedByMe;
+              numLikes = tempNumLikes;
             });
           },
           icon: isLikedByMe ? Icon(Icons.favorite) : Icon(Icons.favorite_border),

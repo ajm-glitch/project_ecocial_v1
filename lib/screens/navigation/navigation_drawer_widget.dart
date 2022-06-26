@@ -36,14 +36,6 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                     openScreen(context, '/my_posts_screen');
                   });
                 }),
-            Divider(),
-            buildMenuItem(
-                text: "Test Screen",
-                onTapped: () {
-                  setState(() {
-                    openScreen(context, '/test_screen');
-                  });
-                }),
           ],
         ),
       ),
