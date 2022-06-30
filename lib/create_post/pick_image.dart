@@ -10,7 +10,6 @@ class PickImage {
     try {
       final image = await ImagePicker().pickImage(source: source);
       if (image == null) return;
-
       final imageTemporary = File(image.path);
       this.image = imageTemporary;
     } on PlatformException catch (e) {

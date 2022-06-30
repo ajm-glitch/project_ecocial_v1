@@ -128,7 +128,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                             Text('Select from gallery'),
                           ],
                         ),
-                      ],
+                      ]
                     ),
                   ),
                 ),

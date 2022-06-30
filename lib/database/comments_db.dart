@@ -60,15 +60,28 @@ class CommentsDb {
     return data;
   }
 
-  Future<List<CommentModel>> getComments(String postId, String commentId) async {
-    List<CommentModel> commentsList = [];
-    final commentsListRef = databaseRef.child("posts").child(postId).child(commentId);
-    DataSnapshot dataSnapshot = await commentsListRef.get();
-    var data = dataSnapshot.value;
-    if (data == null) {
-      return [];
+  Future<int> getNumComments(String postId) async {
+    int numComments = 0;
+    final databaseRef = FirebaseDatabase.instance.reference();
+    var ref = databaseRef.child('posts').child(postId).child('comments');
+    DataSnapshot datasnapshot = await ref.get();
+    if (datasnapshot.value == null) {
+      return numComments;
     }
-    return commentsList;
+    var commentsList = datasnapshot.value as Map;
+    numComments = commentsList.keys.length;
+    return numComments;
   }
+
+  // Future<List<CommentModel>> getComments(String postId, String commentId) async {
+  //   List<CommentModel> commentsList = [];
+  //   final commentsListRef = databaseRef.child("posts").child(postId).child(commentId); // why commentId??
+  //   DataSnapshot dataSnapshot = await commentsListRef.get();
+  //   var data = dataSnapshot.value;
+  //   if (data == null) {
+  //     return [];
+  //   }
+  //   return commentsList;
+  // }
 
 }

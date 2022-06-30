@@ -50,17 +50,24 @@ class MyPostsNotifier extends ChangeNotifier {
     return result;
   }
 
-  void resetMyPostsList() {
-    _myPostStream.cancel();
-    _myPostsList = [];
-  }
-  Future<bool> reloadMyPosts() async {
-    print("reloadMyPosts called");
-    return await listenToPosts();
-  }
+  // void resetMyPostsList() {
+  //   _myPostStream.cancel();
+  //   _myPostsList = [];
+  // }
+
+  // Future<bool> reloadMyPosts() async {
+  //   print("reloadMyPosts called");
+  //   return await listenToPosts();
+  // }
 
   Future<bool> anyMyPostsExist(String uid) async {
     DataSnapshot snapshot = await _dbReference.child("users").child(uid).child("postIds").get();
     return snapshot.value != null;
+  }
+
+  @override
+  void dispose() {
+    _myPostStream.cancel();
+    super.dispose();
   }
 }

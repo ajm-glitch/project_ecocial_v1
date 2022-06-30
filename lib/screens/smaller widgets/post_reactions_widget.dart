@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:project_ecocial/database/comments_db.dart';
 import 'package:project_ecocial/screens/smaller%20widgets/delete_post_icon.dart';
 import '../../database/likes_db.dart';
 import '../../models/post_model.dart';
@@ -25,6 +25,7 @@ class _PostReactionsWidgetState extends State<PostReactionsWidget> {
   LikesDb likesDb = new LikesDb();
   bool isLikedByMe = false;
   int numLikes = 0;
+  int numComments = 0;
 
   @override
   void initState() {
@@ -46,25 +47,31 @@ class _PostReactionsWidgetState extends State<PostReactionsWidget> {
         deactivate();
       }
     });
+    CommentsDb commentsDb = new CommentsDb();
+    commentsDb.getNumComments(widget.postData.id).then((value) {
+      setState(() {
+        numComments = value;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    String numComments = "0";
     final currentUser = FirebaseAuth.instance.currentUser;
     return Row(
       children: [
         Text(
-          numComments,
+          numComments.toString(),
           style: TextStyle(
             color: Color.fromRGBO(117, 117, 117, 1),
           ),
         ),
         IconButton(
           onPressed: () {
+            print(widget.postData.id);
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => CommentsScreen(passedInPostId: widget.postData.id)),
+              MaterialPageRoute(builder: (context) => CommentsScreen(passedInPostId: widget.postData.id, numComments: numComments,)),
             );
           },
           icon: Icon(Icons.comment),

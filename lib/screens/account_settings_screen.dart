@@ -98,25 +98,52 @@ class _AccountSettingsState extends State<AccountSettings> {
                     ),
                   ),
                   SizedBox(width: 60,),
-                  TextButton(
-                    onPressed: () async {
-                      final provider = Provider.of<GoogleSignInProvider>(
-                          context,
-                          listen: false);
-                           try {
-                        await provider.logOut();
-                        Navigator.pop(context);
-                      } catch(e) {
-                        print('logging out error: ' + e.toString());
-                      }
-
-                    },
-                    // color: Colors.white,
-                    child: Text(
-                      'Log out',
-                      style: TextStyle(
-                        color: Color.fromRGBO(90, 155, 115, 1),
+                  // TextButton(
+                  //   onPressed: () async {
+                  //     final provider = Provider.of<GoogleSignInProvider>(
+                  //         context,
+                  //         listen: false);
+                  //          try {
+                  //       await provider.logOut();
+                  //       Navigator.pop(context);
+                  //     } catch(e) {
+                  //       print('logging out error: ' + e.toString());
+                  //     }
+                  //
+                  //   },
+                  //   child: Text(
+                  //     'Log out',
+                  //     style: TextStyle(
+                  //       color: Color.fromRGBO(90, 155, 115, 1),
+                  //     ),
+                  //   ),
+                  // ),
+                  FlatButton(
+                      onPressed: () async {
+                        final provider = Provider.of<GoogleSignInProvider>(
+                            context,
+                            listen: false);
+                        try {
+                          await provider.logOut();
+                          Navigator.pop(context);
+                        } catch(e) {
+                          print('logging out error: ' + e.toString());
+                        }
+                      },
+                      child: Text(
+                        'Log out',
+                        style: TextStyle(
+                          color: Color.fromRGBO(90, 155, 115, 1),
+                        ),
                       ),
+                    height: 50,
+                    minWidth: 100,
+                    shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                            color: Color.fromRGBO(90, 155, 115, 1),
+                            width: 2.0,
+                            style: BorderStyle.solid),
+                        borderRadius: BorderRadius.circular(50)
                     ),
                   ),
                 ],

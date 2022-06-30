@@ -4,25 +4,32 @@ import 'package:flutter/material.dart';
 import 'package:project_ecocial/models/comment_model.dart';
 import 'package:project_ecocial/screens/comments_screen.dart';
 
-class CommentNotifier extends ChangeNotifier{
+class CommentNotifier extends ChangeNotifier {
 
   List<CommentModel> _commentList = [];
 
   List<CommentModel> get commentList => _commentList;
   final _dbReference = FirebaseDatabase.instance.reference();
-  late StreamSubscription<Event> _commentStream;
+  late StreamSubscription<Event> commentStream;
 
-  set commentList(List<CommentModel> commentList) {
+  void setCommentList(List<CommentModel> commentList) {
     _commentList = commentList;
     notifyListeners();
   }
 
   CommentNotifier() {
-    _listenToPosts();
+    print("calling comments initializer");
+    // listenToComments();
   }
 
-  void _listenToPosts() {
-    _commentStream = _dbReference.child("posts").child("$postId").child('comments').onValue.listen((event) {
+  void listenToComments() async {
+    // bool result = await anyCommentsAvailable();
+    // if (result) {
+    //   print("checked! no comments available");
+    //   //noCommentsAvailable = true;
+    //   return;
+    // }
+    commentStream = _dbReference.child("posts").child(postId).child('comments').onValue.listen((event) {
       if (event.snapshot.value == null) {
         print("no comments available");
         return;
@@ -42,8 +49,11 @@ class CommentNotifier extends ChangeNotifier{
 
   @override
   void dispose() {
-    _commentStream.cancel();
     super.dispose();
+    print("dispose called on comments");
+    _commentList = [];
+    commentStream.cancel();
   }
+
 
 }
