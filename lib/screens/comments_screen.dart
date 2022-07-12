@@ -140,7 +140,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                     postCommentWidget,
                     noCommentsWidget,
                   ],
-                );
+                 );
               }
 
             },

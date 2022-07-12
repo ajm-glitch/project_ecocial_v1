@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.project_ecocial">
+    package="com.ecocialapp.germination">
    <application
         android:label="project_ecocial"
         android:icon="@mipmap/ic_launcher">

@@ -1,4 +1,4 @@
-package com.example.project_ecocial
+package com.ecocialapp.germination
 
 import io.flutter.embedding.android.FlutterActivity
 
