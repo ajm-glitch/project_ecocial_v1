@@ -1,22 +1,41 @@
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:project_ecocial/models/post_model.dart';
+import 'package:image/image.dart' as Im;
 
 class PostingDb {
 
   late List<String> postIds;
   late PostModel postModel;
+  late File imageFile;
+  bool imageFileExists = false;
+  late String imagePath = "";
 
   final databaseRef = FirebaseDatabase.instance.reference(); //database reference object
 
-  Future<bool> post(String title, String description, String username, String imagePath, String? uid) async {
+  PostingDb(File? imageFile) {
+    if (imageFile != null) {
+      imageFileExists = true;
+      this.imageFile = imageFile;
+    }
+  }
+
+  Future<bool> post(String title, String description, String username, String? uid) async {
     bool success = false;
     final postRef = databaseRef.child("posts");
-    postModel = createPost(title, description, username, imagePath, uid!);
     var postedId = "";
     try {
       var justPosted = postRef.push();
       postedId = justPosted.key;
+      if (imageFileExists) {
+        //await compressImage(postedId);
+        this.imagePath = await uploadImage(imageFile, postedId);
+        //print("imagePath: " + imagePath); // prints link to firebase storage
+      }
+      postModel = createPost(title, description, username, imagePath, uid!);
       justPosted.set({
         'title': postModel.title,
         'body': postModel.body,
@@ -25,8 +44,7 @@ class PostingDb {
         'username': postModel.username,
         'uid': postModel.uid,
         'postOrder': postModel.postOrder,
-        // 'likedUids': postModel.likedUids,
-      }); // in future, add other instance fields too
+      });
       success = true;
       postModel.id = postedId;
     } catch(e) {
@@ -91,6 +109,20 @@ class PostingDb {
       return [];
     }
     return data;
+  }
+
+  // compressImage(String postId) async {
+  //   final tempDir = await getTemporaryDirectory();
+  //   final path = tempDir.path;
+  //   Im.Image? imageFile = Im.decodeImage(this.imageFile.readAsBytesSync());
+  //   final compressedImageFile = File('$path/img_$postId.jpg')..writeAsBytesSync(Im.encodeJpg(imageFile!, quality: 85));
+  //   this.imageFile = compressedImageFile;
+  // }
+
+  Future<String> uploadImage(imageFile, postId) async {
+    final storageRef = FirebaseStorage.instance.ref();
+    var storageSnap = await storageRef.child("post_$postId.jpg").putFile(imageFile);
+    return await storageSnap.ref.getDownloadURL();
   }
 
 }

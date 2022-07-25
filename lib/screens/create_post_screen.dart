@@ -19,8 +19,8 @@ class CreatePostScreen extends StatefulWidget {
 
 class _CreatePostScreenState extends State<CreatePostScreen> {
 
-  File? image;
-  String imagePath = "";
+  File? imageFile;
+  //String imagePath = "";
 
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -28,7 +28,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
+    //imageFile = null;
     titleController.dispose();
     descriptionController.dispose();
     super.dispose();
@@ -36,13 +36,17 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
   Future pickImage(ImageSource source) async {
     try {
-      final image = await ImagePicker().pickImage(source: source);
-      if (image == null) {
-        return;
+      var file = await ImagePicker().pickImage(source: source, maxHeight: 675, maxWidth: 960);
+      if (file == null) {
+        return null;
       }
-      final imageTemporary = File(image.path);
-      setState(() => this.image = imageTemporary);
-      imagePath = image.path;
+      File? realFile = File(file.path);
+      // final imageTemporary = File(image.path);
+      // setState(() => this.image = imageTemporary);
+      //imagePath = image.path;
+      setState(() {
+        this.imageFile = realFile;
+      });
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
     }
@@ -135,9 +139,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 SizedBox(height: 50),
                 Text('Images selected:'),
                 SizedBox(height: 20), //Image.file(File(path))
-                image != null
+                imageFile != null
                     ? Image.file(
-                  image!,
+                  imageFile!,
                   width: 80,
                   height: 80,
                   fit: BoxFit.cover,
@@ -198,8 +202,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                         if (username == null) {
                           username = "sample username"; // change
                         }
-                        PostingDb postingObject = new PostingDb();
-                        bool success = await postingObject.post(titleController.text, descriptionController.text, username, imagePath, uid);
+                        PostingDb postingObject = new PostingDb(imageFile);
+                        bool success = await postingObject.post(titleController.text, descriptionController.text, username, uid);
                         if (success) {
                           Navigator.pop(context);
                           _showSuccessAlertDialog(context);
