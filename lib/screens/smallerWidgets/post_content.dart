@@ -20,9 +20,11 @@ class _PostContentState extends State<PostContent> {
   void initState()  {
     super.initState();
     getDownloadUrl().then((value) {
-      setState(() {
-        imageDownloadUrl = value;
-      });
+      if (mounted) {
+        setState(() {
+          imageDownloadUrl = value;
+        });
+      }
     });
   }
 
