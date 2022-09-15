@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'smaller widgets/google_sign_up_button.dart';
+import 'package:project_ecocial/screens/smallerWidgets/google_sign_up_button.dart';
 
 class SignUpWidget extends StatelessWidget {
   const SignUpWidget({Key? key}) : super(key: key);

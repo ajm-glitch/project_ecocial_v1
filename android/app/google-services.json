@@ -15,7 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "509876696425-q8l9t777d74nie57382j2p98p25l4tt3.apps.googleusercontent.com",
+          "client_id": "509876696425-99381uorlevj4on4p5qde6gfv7vs9h9l.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ecocialapp.germination",
@@ -38,43 +38,13 @@
             {
               "client_id": "509876696425-u459num84pfecuf0opbr10a2sjh49vb6.apps.googleusercontent.com",
               "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:509876696425:android:282fac86c7cfb330fcb9f8",
-        "android_client_info": {
-          "package_name": "com.example.project_ecocial"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "509876696425-v6o7cq38mqeu6hmltdltdm63tn2q3quo.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.project_ecocial",
-            "certificate_hash": "249fb5ae141fa47cad880d977a5838d3c4dff179"
-          }
-        },
-        {
-          "client_id": "509876696425-u459num84pfecuf0opbr10a2sjh49vb6.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDa73CytvMxRDHKDdVvyh-I3pQ9q8ACpyU"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
+            },
             {
-              "client_id": "509876696425-u459num84pfecuf0opbr10a2sjh49vb6.apps.googleusercontent.com",
-              "client_type": 3
+              "client_id": "509876696425-liustput8eqi6blcboc3r6h1rc35c6e8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ecocialapp.germination"
+              }
             }
           ]
         }

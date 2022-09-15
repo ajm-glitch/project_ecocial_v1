@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:project_ecocial/database/notifiers/post_notifier.dart';
 import 'package:project_ecocial/screens/create_post_screen.dart';
-import 'package:project_ecocial/screens/smaller%20widgets/postCard.dart';
+import 'package:project_ecocial/screens/smallerWidgets/postCard.dart';
 import 'package:provider/provider.dart';
+
 import 'navigation/navigation_drawer_widget.dart';
 
 bool noPostsAvailable = false;
 
 class HomeFeed extends StatefulWidget {
-
   @override
   State<HomeFeed> createState() => _HomeFeedState();
-
 }
 
 class _HomeFeedState extends State<HomeFeed> {
-
-  void initState() { // Perhaps don't need? check later
+  void initState() {
+    // Perhaps don't need? check later
     PostNotifier postNotifier = new PostNotifier();
     postNotifier.reloadPosts();
   }
@@ -48,21 +47,26 @@ class _HomeFeedState extends State<HomeFeed> {
         foregroundColor: Colors.white,
         backgroundColor: Color.fromRGBO(90, 155, 115, 1),
       ),
-      body: noPostsAvailable ? noPosts : Consumer<PostNotifier>(
-        builder: (context, model, child) {
-          return Column(
-            children: [
-              Expanded(
-                child: ListView(
+      body: noPostsAvailable
+          ? noPosts
+          : Consumer<PostNotifier>(
+              builder: (context, model, child) {
+                return Column(
                   children: [
-                    ...model.postList.map((postData) => PostCard(postData: postData, isMyPost: false,))
+                    Expanded(
+                      child: ListView(
+                        children: [
+                          ...model.postList.map((postData) => PostCard(
+                                postData: postData,
+                                isMyPost: false,
+                              ))
+                        ],
+                      ),
+                    ),
                   ],
-                ),
-              ),
-            ],
-          );
-        },
-      ),
+                );
+              },
+            ),
     );
   }
 }

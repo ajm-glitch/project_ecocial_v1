@@ -1,27 +1,27 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_ecocial/database/comments_db.dart';
-import 'package:project_ecocial/screens/smaller%20widgets/delete_post_icon.dart';
+
 import '../../database/likes_db.dart';
 import '../../models/post_model.dart';
 import '../comments_screen.dart';
+import 'delete_post_icon.dart';
 import 'flagIconForPost.dart';
 
 int numLikes = 0;
 
 class PostReactionsWidget extends StatefulWidget {
-
   final PostModel postData;
   final bool isMyPost;
-  const PostReactionsWidget({Key? key, required this.postData, required this.isMyPost}) : super(key: key);
-
+  const PostReactionsWidget(
+      {Key? key, required this.postData, required this.isMyPost})
+      : super(key: key);
 
   @override
   State<PostReactionsWidget> createState() => _PostReactionsWidgetState();
 }
 
 class _PostReactionsWidgetState extends State<PostReactionsWidget> {
-
   LikesDb likesDb = new LikesDb();
   bool isLikedByMe = false;
   int numLikes = 0;
@@ -71,7 +71,11 @@ class _PostReactionsWidgetState extends State<PostReactionsWidget> {
             print(widget.postData.id);
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => CommentsScreen(passedInPostId: widget.postData.id, numComments: numComments,)),
+              MaterialPageRoute(
+                  builder: (context) => CommentsScreen(
+                        passedInPostId: widget.postData.id,
+                        numComments: numComments,
+                      )),
             );
           },
           icon: Icon(Icons.comment),
@@ -93,13 +97,15 @@ class _PostReactionsWidgetState extends State<PostReactionsWidget> {
               numLikes = tempNumLikes;
             });
           },
-          icon: isLikedByMe ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
+          icon:
+              isLikedByMe ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
           color: Color.fromRGBO(101, 171, 200, 1),
         ),
         SizedBox(width: 20),
-        widget.isMyPost ? deletePostWidget(context, widget.postData.id) : postFlagWidget(context, widget.postData.id),
+        widget.isMyPost
+            ? deletePostWidget(context, widget.postData.id)
+            : postFlagWidget(context, widget.postData.id),
       ],
     );
   }
-
 }

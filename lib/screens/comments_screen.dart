@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:project_ecocial/database/notifiers/comment_notifier.dart';
 import 'package:project_ecocial/database/comments_db.dart';
+import 'package:project_ecocial/database/notifiers/comment_notifier.dart';
 import 'package:project_ecocial/screens/home_feed_screen.dart';
-import 'package:project_ecocial/screens/smaller%20widgets/commentCard.dart';
+import 'package:project_ecocial/screens/smallerWidgets/commentCard.dart';
 import 'package:provider/provider.dart';
 
 String postId = "";
@@ -11,14 +11,15 @@ class CommentsScreen extends StatefulWidget {
   String passedInPostId;
   int numComments;
 
-  CommentsScreen({Key? key, required this.passedInPostId, required this.numComments}) : super(key: key);
+  CommentsScreen(
+      {Key? key, required this.passedInPostId, required this.numComments})
+      : super(key: key);
 
   @override
   State<CommentsScreen> createState() => _CommentsScreenState();
 }
 
 class _CommentsScreenState extends State<CommentsScreen> {
-
   @override
   Widget build(BuildContext context) {
     final commentController = TextEditingController();
@@ -43,8 +44,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
           },
           color: Color.fromRGBO(101, 171, 200, 1),
           child: Consumer<CommentNotifier>(
-            builder: (context, model, child)  {
-
+            builder: (context, model, child) {
               Widget commentListWdiget = Expanded(
                 flex: 3,
                 child: ListView(
@@ -68,8 +68,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                         Expanded(
                           child: TextField(
                             decoration: new InputDecoration.collapsed(
-                                hintText: 'Add a comment...'
-                            ),
+                                hintText: 'Add a comment...'),
                             controller: commentController,
                           ),
                         ),
@@ -79,7 +78,11 @@ class _CommentsScreenState extends State<CommentsScreen> {
                               Navigator.pop(context);
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => CommentsScreen(passedInPostId: widget.passedInPostId, numComments: 1,)),
+                                MaterialPageRoute(
+                                    builder: (context) => CommentsScreen(
+                                          passedInPostId: widget.passedInPostId,
+                                          numComments: 1,
+                                        )),
                               );
                             }
                             showDialog(
@@ -89,12 +92,12 @@ class _CommentsScreenState extends State<CommentsScreen> {
                                   Center(child: CircularProgressIndicator()),
                             );
                             CommentsDb commentsDb = new CommentsDb();
-                            bool success = await commentsDb.postComment(commentController.text, postId);
+                            bool success = await commentsDb.postComment(
+                                commentController.text, postId);
                             if (success) {
                               Navigator.pop(context);
                               commentController.clear();
-                            }
-                            else {
+                            } else {
                               print("error in posting comment");
                             }
                           },
@@ -102,8 +105,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                             'Post',
                             style: TextStyle(
                                 color: Color.fromRGBO(101, 171, 200, 1),
-                                fontSize: 16
-                            ),
+                                fontSize: 16),
                           ),
                         ),
                       ],
@@ -130,8 +132,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                     )
                   ],
                 );
-              }
-              else {
+              } else {
                 return Column(
                   children: [
                     SizedBox(
@@ -140,9 +141,8 @@ class _CommentsScreenState extends State<CommentsScreen> {
                     postCommentWidget,
                     noCommentsWidget,
                   ],
-                 );
+                );
               }
-
             },
           ),
         ),
