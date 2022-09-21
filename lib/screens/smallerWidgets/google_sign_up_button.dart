@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:project_ecocial/authentication/google_sign_in_provider.dart';
 import 'package:provider/provider.dart';
-
 import '../../database/notifiers/my_posts_notifier.dart';
 
 class GoogleSignUpButtonWidget extends StatelessWidget {
@@ -11,25 +10,24 @@ class GoogleSignUpButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(4),
-      child: ElevatedButton.icon(
-        label: Text(
-          'Log in with Google',
-          style: TextStyle(fontSize: 20),
+        child: FloatingActionButton.extended(
+          onPressed: () async {
+            final provider =
+            Provider.of<GoogleSignInProvider>(context, listen: false);
+            await provider.logIn();
+            Provider.of<MyPostsNotifier>(context, listen: false).listenToPosts();
+          },
+          elevation: 2.0,
+          label: Text(
+              "Sign in with Google",
+            style: TextStyle(
+              fontSize: 18,
+            ),
+          ),
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          icon: FaIcon(FontAwesomeIcons.google, color: Colors.red),
         ),
-        // shape: StadiumBorder(),
-        // padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        //highlightedBorderColor: Color.fromRGBO(90, 155, 115, 1),
-        // borderSide: BorderSide(color: Color.fromRGBO(90, 155, 115, 1),),
-        // textColor: Colors.black,
-        icon: FaIcon(FontAwesomeIcons.google, color: Colors.red),
-        onPressed: () async {
-          final provider =
-              Provider.of<GoogleSignInProvider>(context, listen: false);
-          await provider.logIn();
-          Provider.of<MyPostsNotifier>(context, listen: false).listenToPosts();
-        },
-      ),
     );
   }
 }

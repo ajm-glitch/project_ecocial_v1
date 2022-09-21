@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:project_ecocial/screens/smallerWidgets/google_sign_up_button.dart';
 
 class SignUpWidget extends StatelessWidget {
@@ -18,6 +19,7 @@ class SignUpWidget extends StatelessWidget {
             image: AssetImage('assets/greenNeighborhood.png'),
           ),
           SizedBox(height: 70),
+
           GoogleSignUpButtonWidget(),
         ],
       ),
