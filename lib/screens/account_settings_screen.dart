@@ -71,45 +71,90 @@ class _AccountSettingsState extends State<AccountSettings> {
                 children: [
                   Padding(
                     padding: EdgeInsets.fromLTRB(38.0, 14.0, 38.0, 14.0),
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        String username = usernameController.text;
-                        bool result1 = userDb.pushUsernameToDb(username);
-                        bool result2 = await userDb
-                            .updateUsernameInPreviousPostsDb(username);
-                        if (result1 == true && result2 == true) {
-                          Toast.show("Saved!", duration: Toast.lengthShort);
-                        } else {
-                          print("error updating username");
-                        }
-                      },
-                      child: Text(
-                        'Save',
-                        style: TextStyle(
-                          color: Colors.white,
+                    // child: ElevatedButton(
+                    //   onPressed: () async {
+                    //     String username = usernameController.text;
+                    //     bool result1 = userDb.pushUsernameToDb(username);
+                    //     bool result2 = await userDb
+                    //         .updateUsernameInPreviousPostsDb(username);
+                    //     if (result1 == true && result2 == true) {
+                    //       Toast.show("Saved!", duration: Toast.lengthShort);
+                    //     } else {
+                    //       print("error updating username");
+                    //     }
+                    //   },
+                    //   child: Text(
+                    //     'Save',
+                    //     style: TextStyle(
+                    //       color: Colors.white,
+                    //     ),
+                    //   ),
+                    // ),
+                    child: Container(
+                      child: FloatingActionButton.extended(
+                        heroTag: "saveButton",
+                        onPressed: () async {
+                          String username = usernameController.text;
+                              bool result1 = userDb.pushUsernameToDb(username);
+                              bool result2 = await userDb
+                                  .updateUsernameInPreviousPostsDb(username);
+                              if (result1 == true && result2 == true) {
+                                Toast.show("Saved!", duration: Toast.lengthShort);
+                              } else {
+                                print("error updating username");
+                              }
+                        },
+                        elevation: 2.0,
+                        label: Text(
+                          "Save",
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
                         ),
+                        backgroundColor: Color.fromRGBO(90, 155, 115, 1),
+                        foregroundColor: Colors.white,
                       ),
-                      // color: Color.fromRGBO(90, 155, 115, 1),
-                      // shape: RoundedRectangleBorder(
-                      //   borderRadius: BorderRadius.circular(50),
-                      // ),
                     ),
                   ),
                   SizedBox(
                     width: 60,
+                  ),
+                  Container(
+                    child: FloatingActionButton.extended(
+                      heroTag: "logOutButton",
+                      onPressed: () async {
+                        final provider = Provider.of<GoogleSignInProvider>(
+                            context,
+                            listen: false);
+                        try {
+                          await provider.logOut();
+                          Navigator.pop(context);
+                        } catch (e) {
+                          print('logging out error: ' + e.toString());
+                        }
+                      },
+                      elevation: 2.0,
+                      label: Text(
+                        "Sign out",
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
+                    ),
                   ),
                   // TextButton(
                   //   onPressed: () async {
                   //     final provider = Provider.of<GoogleSignInProvider>(
                   //         context,
                   //         listen: false);
-                  //          try {
+                  //     try {
                   //       await provider.logOut();
                   //       Navigator.pop(context);
-                  //     } catch(e) {
+                  //     } catch (e) {
                   //       print('logging out error: ' + e.toString());
                   //     }
-                  //
                   //   },
                   //   child: Text(
                   //     'Log out',
@@ -117,35 +162,16 @@ class _AccountSettingsState extends State<AccountSettings> {
                   //       color: Color.fromRGBO(90, 155, 115, 1),
                   //     ),
                   //   ),
+                  //   // height: 50,
+                  //   // minWidth: 100,
+                  //   // shape: RoundedRectangleBorder(
+                  //   //     side: BorderSide(
+                  //   //         color: Color.fromRGBO(90, 155, 115, 1),
+                  //   //         width: 2.0,
+                  //   //         style: BorderStyle.solid),
+                  //   //     borderRadius: BorderRadius.circular(50)
+                  //   // ),
                   // ),
-                  TextButton(
-                    onPressed: () async {
-                      final provider = Provider.of<GoogleSignInProvider>(
-                          context,
-                          listen: false);
-                      try {
-                        await provider.logOut();
-                        Navigator.pop(context);
-                      } catch (e) {
-                        print('logging out error: ' + e.toString());
-                      }
-                    },
-                    child: Text(
-                      'Log out',
-                      style: TextStyle(
-                        color: Color.fromRGBO(90, 155, 115, 1),
-                      ),
-                    ),
-                    // height: 50,
-                    // minWidth: 100,
-                    // shape: RoundedRectangleBorder(
-                    //     side: BorderSide(
-                    //         color: Color.fromRGBO(90, 155, 115, 1),
-                    //         width: 2.0,
-                    //         style: BorderStyle.solid),
-                    //     borderRadius: BorderRadius.circular(50)
-                    // ),
-                  ),
                 ],
               )
             ],
