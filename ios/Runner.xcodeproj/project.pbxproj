@@ -12,8 +12,10 @@
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		8A89628E79E3ACCBA376E6B1 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516C6AEE3ABA4099033739C4 /* Pods_Runner.framework */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
-		9B0D845B28F891CB0014D571 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B0D845728F891CB0014D571 /* LaunchScreen.storyboard */; };
-		9B0D845C28F891CB0014D571 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B0D845928F891CB0014D571 /* Main.storyboard */; };
+		9B08A33828F8D3DB008EE63B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B08A33428F8D3DB008EE63B /* LaunchScreen.storyboard */; };
+		9B08A33928F8D3DB008EE63B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B08A33628F8D3DB008EE63B /* Main.storyboard */; };
+		9B0D846128F893060014D571 /* LaunchScreen.storyboard.xml in Resources */ = {isa = PBXBuildFile; fileRef = 9B0D845D28F893060014D571 /* LaunchScreen.storyboard.xml */; };
+		9B0D846228F893060014D571 /* Main.storyboard.xml in Resources */ = {isa = PBXBuildFile; fileRef = 9B0D845F28F893060014D571 /* Main.storyboard.xml */; };
 		FDE38EC028E534A0009AA6C6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FDE38EBF28E534A0009AA6C6 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -44,8 +46,10 @@
 		97C146EE1CF9000F007C117D /* Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9B0D845828F891CB0014D571 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		9B0D845A28F891CB0014D571 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9B08A33528F8D3DB008EE63B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9B08A33728F8D3DB008EE63B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9B0D845E28F893060014D571 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Base; path = Base.lproj/LaunchScreen.storyboard.xml; sourceTree = "<group>"; };
+		9B0D846028F893060014D571 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Base; path = Base.lproj/Main.storyboard.xml; sourceTree = "<group>"; };
 		C6B30320DF12462CAE0C0123 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		F797CA558EF417F83A26A222 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		FDE38EBF28E534A0009AA6C6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -107,8 +111,10 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
-				9B0D845728F891CB0014D571 /* LaunchScreen.storyboard */,
-				9B0D845928F891CB0014D571 /* Main.storyboard */,
+				9B08A33428F8D3DB008EE63B /* LaunchScreen.storyboard */,
+				9B08A33628F8D3DB008EE63B /* Main.storyboard */,
+				9B0D845D28F893060014D571 /* LaunchScreen.storyboard.xml */,
+				9B0D845F28F893060014D571 /* Main.storyboard.xml */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
 				97C147021CF9000F007C117D /* Info.plist */,
 				1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */,
@@ -190,9 +196,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B08A33928F8D3DB008EE63B /* Main.storyboard in Resources */,
+				9B0D846128F893060014D571 /* LaunchScreen.storyboard.xml in Resources */,
+				9B0D846228F893060014D571 /* Main.storyboard.xml in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
-				9B0D845C28F891CB0014D571 /* Main.storyboard in Resources */,
-				9B0D845B28F891CB0014D571 /* LaunchScreen.storyboard in Resources */,
+				9B08A33828F8D3DB008EE63B /* LaunchScreen.storyboard in Resources */,
 				FDE38EC028E534A0009AA6C6 /* GoogleService-Info.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 			);
@@ -283,20 +291,36 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		9B0D845728F891CB0014D571 /* LaunchScreen.storyboard */ = {
+		9B08A33428F8D3DB008EE63B /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				9B0D845828F891CB0014D571 /* Base */,
+				9B08A33528F8D3DB008EE63B /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
-		9B0D845928F891CB0014D571 /* Main.storyboard */ = {
+		9B08A33628F8D3DB008EE63B /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				9B0D845A28F891CB0014D571 /* Base */,
+				9B08A33728F8D3DB008EE63B /* Base */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		9B0D845D28F893060014D571 /* LaunchScreen.storyboard.xml */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9B0D845E28F893060014D571 /* Base */,
+			);
+			name = LaunchScreen.storyboard.xml;
+			sourceTree = "<group>";
+		};
+		9B0D845F28F893060014D571 /* Main.storyboard.xml */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9B0D846028F893060014D571 /* Base */,
+			);
+			name = Main.storyboard.xml;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -358,6 +382,7 @@
 			baseConfigurationReference = F797CA558EF417F83A26A222 /* Pods-Runner.profile.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = WUG38YYRD2;
@@ -489,6 +514,7 @@
 			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = WUG38YYRD2;
@@ -512,6 +538,7 @@
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = WUG38YYRD2;
