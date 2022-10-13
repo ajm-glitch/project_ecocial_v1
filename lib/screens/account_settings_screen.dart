@@ -71,25 +71,6 @@ class _AccountSettingsState extends State<AccountSettings> {
                 children: [
                   Padding(
                     padding: EdgeInsets.fromLTRB(38.0, 14.0, 38.0, 14.0),
-                    // child: ElevatedButton(
-                    //   onPressed: () async {
-                    //     String username = usernameController.text;
-                    //     bool result1 = userDb.pushUsernameToDb(username);
-                    //     bool result2 = await userDb
-                    //         .updateUsernameInPreviousPostsDb(username);
-                    //     if (result1 == true && result2 == true) {
-                    //       Toast.show("Saved!", duration: Toast.lengthShort);
-                    //     } else {
-                    //       print("error updating username");
-                    //     }
-                    //   },
-                    //   child: Text(
-                    //     'Save',
-                    //     style: TextStyle(
-                    //       color: Colors.white,
-                    //     ),
-                    //   ),
-                    // ),
                     child: Container(
                       child: FloatingActionButton.extended(
                         heroTag: "saveButton",
@@ -117,7 +98,7 @@ class _AccountSettingsState extends State<AccountSettings> {
                     ),
                   ),
                   SizedBox(
-                    width: 60,
+                    width: 40,
                   ),
                   Container(
                     child: FloatingActionButton.extended(

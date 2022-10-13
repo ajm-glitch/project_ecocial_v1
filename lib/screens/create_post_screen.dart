@@ -167,31 +167,27 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   SizedBox(
                     width: 100,
                     height: 46,
-                    child: TextButton(
-                      // minWidth: 100,
-                      // height: 46,
-                      onPressed: () {
+                    child: FloatingActionButton.extended(
+                      heroTag: "cancelButton",
+                      onPressed: () async {
                         Navigator.pop(context);
                       },
-                      // color: Colors.white,
-                      child: Text(
-                        'Cancel',
+                      elevation: 2.0,
+                      label: Text(
+                        "Cancel",
                         style: TextStyle(
-                          color: Color.fromRGBO(90, 155, 115, 1),
+                          fontSize: 18,
                         ),
                       ),
-                      // shape: RoundedRectangleBorder(
-                      //     side: BorderSide(
-                      //         color: Color.fromRGBO(90, 155, 115, 1),
-                      //         width: 2.0,
-                      //         style: BorderStyle.solid),
-                      //     borderRadius: BorderRadius.circular(50)),
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
                     ),
                   ),
                   SizedBox(width: 20),
                   Padding(
                     padding: EdgeInsets.fromLTRB(38.0, 14.0, 38.0, 14.0),
-                    child: ElevatedButton(
+                    child: FloatingActionButton.extended(
+                      heroTag: "postButton",
                       onPressed: () async {
                         showDialog(
                           context: context,
@@ -221,16 +217,15 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                           _showFailureAlertDialog(context);
                         }
                       },
-                      child: Text(
-                        'Post',
+                      elevation: 2.0,
+                      label: Text(
+                        "Post",
                         style: TextStyle(
-                          color: Colors.white,
+                          fontSize: 18,
                         ),
                       ),
-                      // color: Color.fromRGBO(90, 155, 115, 1),
-                      // shape: RoundedRectangleBorder(
-                      //   borderRadius: BorderRadius.circular(50),
-                      // ),
+                      backgroundColor: Color.fromRGBO(90, 155, 115, 1),
+                      foregroundColor: Colors.white,
                     ),
                   ),
                 ],

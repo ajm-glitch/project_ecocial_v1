@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:509876696425:android:34e0565029452199fcb9f8",
+        "mobilesdk_app_id": "1:509876696425:android:b6cf8fc7c0c6b989fcb9f8",
         "android_client_info": {
-          "package_name": "com.ecocialapp.germination"
+          "package_name": "com.ecocialapp.germination1"
         }
       },
       "oauth_client": [
         {
-          "client_id": "509876696425-7pgkrr8rjc72568t9t1pr4mr16sn9kch.apps.googleusercontent.com",
+          "client_id": "509876696425-08tlsq24k3rnibe11k7ilvb9c19ahf8j.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.ecocialapp.germination",
-            "certificate_hash": "249fb5ae141fa47cad880d977a5838d3c4dff179"
+            "package_name": "com.ecocialapp.germination1",
+            "certificate_hash": "bea3239e348ccf131be0efcb21a234f1210c3671"
           }
         },
         {
