@@ -1,15 +1,16 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:project_ecocial/database/notifiers/my_posts_notifier.dart';
 import 'package:project_ecocial/database/notifiers/post_notifier.dart';
-import 'package:project_ecocial/screens/my_posts_screen.dart';
 import 'package:project_ecocial/screens/account_settings_screen.dart';
 import 'package:project_ecocial/screens/home_feed_screen.dart';
+import 'package:project_ecocial/screens/my_posts_screen.dart';
 import 'package:project_ecocial/screens/wrapper.dart';
 import 'package:provider/provider.dart';
+
 import 'authentication/google_sign_in_provider.dart';
 import 'database/notifiers/comment_notifier.dart';
-import 'package:flutter/services.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,9 +31,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CommentNotifier()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Wrapper(),
         routes: {
-          '/home_screen' : (context) => HomeFeed(),
+          '/home_screen': (context) => HomeFeed(),
           '/account_settings_screen': (context) => AccountSettings(),
           '/my_posts_screen': (context) => MyPostsScreen(),
         },

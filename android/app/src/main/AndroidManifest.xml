@@ -2,7 +2,7 @@
     package="com.ecocialapp.germination1">
    <application
         android:label="Ecocial"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:exported="true"
             android:name=".MainActivity"
