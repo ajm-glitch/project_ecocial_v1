@@ -45,7 +45,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
           color: Color.fromRGBO(101, 171, 200, 1),
           child: Consumer<CommentNotifier>(
             builder: (context, model, child) {
-              Widget commentListWdiget = Expanded(
+              Widget commentListWidget = Expanded(
                 flex: 3,
                 child: ListView(
                   children: [
@@ -115,7 +115,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
               );
 
               Widget noCommentsWidget = Container(
-                height: MediaQuery.of(context).size.height - 171,
+                // height: MediaQuery.of(context).size.height - 171,
                 child: Center(
                   child: Text("no comments available"),
                 ),
@@ -125,7 +125,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                 model.listenToComments();
                 return Column(
                   children: [
-                    commentListWdiget,
+                    commentListWidget,
                     postCommentWidget,
                     SizedBox(
                       height: 20,
@@ -135,11 +135,17 @@ class _CommentsScreenState extends State<CommentsScreen> {
               } else {
                 return Column(
                   children: [
-                    SizedBox(
-                      height: 20,
+                    Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: postCommentWidget,
+                        ),
+                        flex: 0,
                     ),
-                    postCommentWidget,
-                    noCommentsWidget,
+                    Expanded(
+                      flex: 3,
+                      child: noCommentsWidget,
+                    ),
                   ],
                 );
               }

@@ -66,7 +66,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 32.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -103,34 +103,36 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Column(
-                          children: [
-                            IconButton(
-                              onPressed: () => pickImage(ImageSource.camera),
-                              icon: Icon(
+                        TextButton(
+                          onPressed: () => pickImage(ImageSource.camera),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
                                 Icons.photo_camera_outlined,
                                 color: Color.fromRGBO(1, 79, 118, 1),
                                 size: 70.0,
                               ),
-                            ),
-                            SizedBox(height: 30),
-                            Text('Take a picture'),
-                          ],
+                              SizedBox(height: 30),
+                              Text('Take a picture'),
+                            ],
+                          ),
                         ),
-                        SizedBox(width: 20),
-                        Column(
-                          children: [
-                            IconButton(
-                              onPressed: () => pickImage(ImageSource.gallery),
-                              icon: Icon(
-                                Icons.insert_photo_outlined,
-                                color: Color.fromRGBO(1, 79, 118, 1),
-                                size: 70.0,
+                        SizedBox(width: 40),
+                        TextButton(
+                          onPressed: () => pickImage(ImageSource.gallery),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                  Icons.insert_photo_outlined,
+                                  color: Color.fromRGBO(1, 79, 118, 1),
+                                  size: 70.0,
                               ),
-                            ),
-                            SizedBox(height: 30),
-                            Text('Select from gallery'),
-                          ],
+                              SizedBox(height: 30),
+                              Text('Select from gallery'),
+                            ],
+                          ),
                         ),
                       ]),
                 ),
@@ -161,7 +163,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     ),
               SizedBox(height: 50),
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // cancel button
                   SizedBox(
@@ -257,19 +259,21 @@ _showSuccessAlertDialog(BuildContext context) {
         fontSize: 24,
       ),
     ),
-    content: Container(
-      height: 320, // Change as content inside changes
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 16.0),
-            child: Image(
-              image: AssetImage('assets/postCreated.png'),
+    content: SingleChildScrollView(
+      child: Container(
+        height: 330, // Change as content inside changes
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 16.0),
+              child: Image(
+                image: AssetImage('assets/postCreated.png'),
+              ),
             ),
-          ),
-          Text(
-              "Thanks for posting! We appreciate everything you're doing for the environment."),
-        ],
+            Text(
+                "Thanks for posting! We appreciate everything you're doing for the environment."),
+          ],
+        ),
       ),
     ),
     actions: [
