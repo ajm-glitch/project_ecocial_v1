@@ -246,9 +246,10 @@ _showSuccessAlertDialog(BuildContext context) {
   Widget closeButton = IconButton(
       onPressed: () {
         Navigator.pop(context);
+        // Navigator.pushNamed(context, '/home_screen');
         Navigator.pop(context);
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomeFeed()));
+        // Navigator.push(
+        //     context, MaterialPageRoute(builder: (context) => HomeFeed()));
       },
       icon: Icon(
         Icons.close,
