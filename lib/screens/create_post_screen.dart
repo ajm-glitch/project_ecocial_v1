@@ -8,8 +8,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:project_ecocial/database/posting_db.dart';
 import 'package:project_ecocial/database/user_db.dart';
 import 'package:project_ecocial/screens/home_feed_screen.dart';
-import 'package:project_ecocial/screens/my_posts_screen.dart';
 import 'package:project_ecocial/screens/smallerWidgets/constants.dart';
+
+import '../controllers/controller_instance.dart';
 
 class CreatePostScreen extends StatefulWidget {
   const CreatePostScreen({Key? key}) : super(key: key);
@@ -125,9 +126,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
-                                  Icons.insert_photo_outlined,
-                                  color: Color.fromRGBO(1, 79, 118, 1),
-                                  size: 70.0,
+                                Icons.insert_photo_outlined,
+                                color: Color.fromRGBO(1, 79, 118, 1),
+                                size: 70.0,
                               ),
                               SizedBox(height: 30),
                               Text('Select from gallery'),
@@ -214,7 +215,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                           Navigator.pop(context);
                           _showSuccessAlertDialog(context);
                           noPostsAvailable = false;
-                          noMyPostsAvailable = false;
+                          // noMyPostsAvailable = false;
+                          myPostController.updateAvailablePost(false);
                         } else {
                           _showFailureAlertDialog(context);
                         }

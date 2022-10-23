@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:project_ecocial/controllers/controller_instance.dart';
 import 'package:project_ecocial/database/notifiers/my_posts_notifier.dart';
 import 'package:project_ecocial/screens/smallerWidgets/postCard.dart';
 import 'package:provider/provider.dart';
 
-bool noMyPostsAvailable = false;
+// bool noMyPostsAvailable = false;
 
 class MyPostsScreen extends StatefulWidget {
   @override
@@ -11,6 +13,13 @@ class MyPostsScreen extends StatefulWidget {
 }
 
 class _MyPostsScreenState extends State<MyPostsScreen> {
+  @override
+  void initState() {
+    //Triggers listeners
+    Provider.of<MyPostsNotifier>(context, listen: false).listenToPosts();
+    super.initState();
+  }
+
   Widget noMyPosts = Container(
       child: Center(child: Text('It seems like you have no posts yet')));
 
@@ -26,10 +35,12 @@ class _MyPostsScreenState extends State<MyPostsScreen> {
         ),
         iconTheme: IconThemeData(color: Colors.white),
       ),
-      body: noMyPostsAvailable
-          ? noMyPosts
-          : Consumer<MyPostsNotifier>(
-              builder: (context, model, child) {
+      body:
+          // noMyPostsAvailable
+          Obx(
+        () => myPostController.availablePost
+            ? noMyPosts
+            : Consumer<MyPostsNotifier>(builder: (context, model, child) {
                 return Column(
                   children: [
                     Expanded(
@@ -46,8 +57,8 @@ class _MyPostsScreenState extends State<MyPostsScreen> {
                     ),
                   ],
                 );
-              },
-            ),
+              }),
+      ),
     );
   }
 }

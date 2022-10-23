@@ -1,20 +1,19 @@
 import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:project_ecocial/models/post_model.dart';
-import 'package:image/image.dart' as Im;
 
 class PostingDb {
-
   late List<String> postIds;
   late PostModel postModel;
   late File imageFile;
   bool imageFileExists = false;
   late String imagePath = "";
 
-  final databaseRef = FirebaseDatabase.instance.reference(); //database reference object
+  final databaseRef =
+      FirebaseDatabase.instance.reference(); //database reference object
 
   PostingDb(File? imageFile) {
     if (imageFile != null) {
@@ -23,7 +22,8 @@ class PostingDb {
     }
   }
 
-  Future<bool> post(String title, String description, String username, String? uid) async {
+  Future<bool> post(
+      String title, String description, String username, String? uid) async {
     bool success = false;
     final postRef = databaseRef.child("posts");
     var postedId = "";
@@ -47,7 +47,7 @@ class PostingDb {
       });
       success = true;
       postModel.id = postedId;
-    } catch(e) {
+    } catch (e) {
       print("error!: " + e.toString());
       success = false;
     }
@@ -65,18 +65,15 @@ class PostingDb {
         int length = postIdList.length;
         // push new updated one to db.
         try {
-          userRef.update({
-            length.toString(): postModel.id
-          });
-        } catch(e) {
+          userRef.update({length.toString(): postModel.id});
+        } catch (e) {
           print("error! " + e.toString());
         }
-
-      } catch(e) {
+      } catch (e) {
         final postToBeDeletedRef = postRef.child(postedId);
         try {
           postToBeDeletedRef.remove();
-        } catch(e) {
+        } catch (e) {
           print("error! " + e.toString());
         }
         print("error! " + e.toString());
@@ -86,7 +83,8 @@ class PostingDb {
     return success;
   }
 
-  createPost(String title, String description, String username, String imagePath, String uid) {
+  createPost(String title, String description, String username,
+      String imagePath, String uid) {
     PostModel post = new PostModel(
       title: title,
       body: description,
@@ -121,8 +119,8 @@ class PostingDb {
 
   Future<String> uploadImage(imageFile, postId) async {
     final storageRef = FirebaseStorage.instance.ref();
-    var storageSnap = await storageRef.child("post_$postId.jpg").putFile(imageFile);
+    var storageSnap =
+        await storageRef.child("post_$postId.jpg").putFile(imageFile);
     return await storageSnap.ref.getDownloadURL();
   }
-
 }

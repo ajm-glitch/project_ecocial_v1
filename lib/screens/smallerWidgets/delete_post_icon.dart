@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:project_ecocial/controllers/controller_instance.dart';
 import 'package:toast/toast.dart';
+
 import '../../database/delete_post_db.dart';
 import '../my_posts_screen.dart';
 
@@ -25,12 +27,11 @@ _showDeleteAlertDialog(BuildContext context, String postId) {
   );
   Widget yesButton = TextButton(
     onPressed: () async {
-       showDialog(
-         context: context,
-         barrierDismissible: false,
-         builder: (context) =>
-             Center(), // child: CircularProgressIndicator()
-       );
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => Center(), // child: CircularProgressIndicator()
+      );
       Navigator.pop(context);
       Navigator.pop(context);
       DeletePostDb deletePostDb = new DeletePostDb();
@@ -41,11 +42,12 @@ _showDeleteAlertDialog(BuildContext context, String postId) {
         bool myPostsExist = await anyMyPostsExist(uid!);
         if (!myPostsExist) {
           Navigator.pop(context);
-          noMyPostsAvailable = true;
-          Navigator.push(context, MaterialPageRoute(builder: (context) => MyPostsScreen()));
+          // noMyPostsAvailable = true;
+          myPostController.updateAvailablePost(true);
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => MyPostsScreen()));
         }
-      }
-      else {
+      } else {
         Toast.show("Unable to delete post!", duration: Toast.lengthShort);
         print('error in deleting post');
       }
@@ -75,8 +77,8 @@ _showDeleteAlertDialog(BuildContext context, String postId) {
 
 Future<bool> anyMyPostsExist(String uid) async {
   final _dbReference = FirebaseDatabase.instance.reference();
-  DataSnapshot snapshot = await _dbReference.child("users").child(uid).child("postIds").get();
+  DataSnapshot snapshot =
+      await _dbReference.child("users").child(uid).child("postIds").get();
   print(snapshot.value.toString());
   return snapshot.value != null;
 }
-

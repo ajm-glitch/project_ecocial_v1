@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:project_ecocial/database/notifiers/my_posts_notifier.dart';
 import 'package:project_ecocial/database/notifiers/post_notifier.dart';
 import 'package:project_ecocial/screens/account_settings_screen.dart';
@@ -10,6 +12,8 @@ import 'package:project_ecocial/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 
 import 'authentication/google_sign_in_provider.dart';
+import 'controllers/controller_instance.dart';
+import 'controllers/data_manager_controller.dart';
 import 'database/notifiers/comment_notifier.dart';
 
 Future<void> main() async {
@@ -17,6 +21,8 @@ Future<void> main() async {
   await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  Get.put(DataManagerController());
+  dataManagerController.initializeControllers();
   runApp(MyApp());
 }
 

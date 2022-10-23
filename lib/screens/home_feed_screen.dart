@@ -26,7 +26,7 @@ class _HomeFeedState extends State<HomeFeed> {
 
   @override
   Widget build(BuildContext context) {
-    PostNotifier postNotifier = new PostNotifier();
+    PostNotifier postNotifier = PostNotifier();
     return Scaffold(
       drawer: NavigationDrawerWidget(),
       appBar: AppBar(

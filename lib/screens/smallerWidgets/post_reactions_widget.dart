@@ -22,7 +22,7 @@ class PostReactionsWidget extends StatefulWidget {
 }
 
 class _PostReactionsWidgetState extends State<PostReactionsWidget> {
-  LikesDb likesDb = new LikesDb();
+  LikesDb likesDb = LikesDb();
   bool isLikedByMe = false;
   int numLikes = 0;
   int numComments = 0;
@@ -99,6 +99,9 @@ class _PostReactionsWidgetState extends State<PostReactionsWidget> {
           },
           icon:
               isLikedByMe ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
+          // likeController.likeStatus
+          //     ? Icon(Icons.favorite)
+          //     : Icon(Icons.favorite_border),
           color: Color.fromRGBO(101, 171, 200, 1),
         ),
         SizedBox(width: 20),

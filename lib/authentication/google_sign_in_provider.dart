@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project_ecocial/database/user_db.dart';
 
-
 class GoogleSignInProvider extends ChangeNotifier {
-
   final googleSignIn = GoogleSignIn();
   late bool _isSigningIn;
   late String userEmail;
@@ -28,8 +26,7 @@ class GoogleSignInProvider extends ChangeNotifier {
       if (user == null) {
         isSigningIn = false;
         return;
-      }
-      else {
+      } else {
         final googleAuth = await user.authentication;
         final credential = GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken,
@@ -39,7 +36,7 @@ class GoogleSignInProvider extends ChangeNotifier {
         await FirebaseAuth.instance.signInWithCredential(credential);
         isSigningIn = false;
       }
-    } catch(e) {
+    } catch (e) {
       print(e.toString());
     }
 
@@ -47,12 +44,16 @@ class GoogleSignInProvider extends ChangeNotifier {
     userDb.pushUserModelToDb();
 
     notifyListeners();
-
   }
 
   Future<void> logOut() async {
-    await googleSignIn.disconnect();
+    User currentUser = FirebaseAuth.instance.currentUser!;
+
+    print('CURRENT USER TYPE: ${currentUser.providerData[0].providerId}');
+
+    if (currentUser.providerData[0].providerId == 'google.com') {
+      await googleSignIn.disconnect();
+    }
     await FirebaseAuth.instance.signOut();
   }
-
 }
