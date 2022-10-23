@@ -16,9 +16,10 @@ class Wrapper extends StatelessWidget {
               'WRAPPER CALLED: ${snapshot}, ${snapshot.data}, ${snapshot.connectionState}');
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasData) {
+          } else if (snapshot.hasData) {
             return HomeFeed();
+          } else if (snapshot.data == null) {
+            return SignUpWidget();
           } else {
             return SignUpWidget();
           }

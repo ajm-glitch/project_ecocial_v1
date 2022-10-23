@@ -1,5 +1,4 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:project_ecocial/controllers/controller_instance.dart';
 
 class LikesDb {
   bool isLiked = false;
@@ -31,14 +30,12 @@ class LikesDb {
     DataSnapshot datasnapshot = await ref.get();
     if (datasnapshot.value == null) {
       isLiked = false;
-      likeController.updateLike(false);
     } else {
       var likedUidsList = datasnapshot.value as Map;
       for (var i = 0; i < likedUidsList.keys.length; i++) {
         String key = likedUidsList.keys.elementAt(i);
         if (likedUidsList[key]['uid'] == uid) {
           isLiked = true;
-          likeController.updateLike(true);
         }
       }
     }
@@ -80,7 +77,6 @@ class LikesDb {
         String key = likedUidsList.keys.elementAt(i);
         if (likedUidsList[key]['uid'] == uid) {
           // keyToBeRemoved = key;
-          likeController.updateLike(false);
           ref.child(key).remove();
           success = true;
           break;

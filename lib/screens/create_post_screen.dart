@@ -198,14 +198,14 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                           builder: (context) =>
                               Center(child: CircularProgressIndicator()),
                         );
-                        UserDb userDb = new UserDb();
+                        UserDb userDb = UserDb();
                         final currentUser = FirebaseAuth.instance.currentUser;
                         String? uid = currentUser?.uid;
                         String username = await userDb.getUsernameFromDb(uid!);
-                        if (username == null) {
-                          username = "sample username"; // change
-                        }
-                        PostingDb postingObject = new PostingDb(imageFile);
+                        // if (username == null) {
+                        //   username = "sample username"; // change
+                        // }
+                        PostingDb postingObject = PostingDb(imageFile);
                         bool success = await postingObject.post(
                             titleController.text,
                             descriptionController.text,

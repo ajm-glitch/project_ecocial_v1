@@ -76,14 +76,14 @@ class _AccountSettingsState extends State<AccountSettings> {
                         heroTag: "saveButton",
                         onPressed: () async {
                           String username = usernameController.text;
-                              bool result1 = userDb.pushUsernameToDb(username);
-                              bool result2 = await userDb
-                                  .updateUsernameInPreviousPostsDb(username);
-                              if (result1 == true && result2 == true) {
-                                Toast.show("Saved!", duration: Toast.lengthShort);
-                              } else {
-                                print("error updating username");
-                              }
+                          bool result1 = userDb.pushUsernameToDb(username);
+                          bool result2 = await userDb
+                              .updateUsernameInPreviousPostsDb(username);
+                          if (result1 == true && result2 == true) {
+                            Toast.show("Saved!", duration: Toast.lengthShort);
+                          } else {
+                            print("error updating username");
+                          }
                         },
                         elevation: 2.0,
                         label: Text(
@@ -110,6 +110,12 @@ class _AccountSettingsState extends State<AccountSettings> {
                         try {
                           await provider.logOut();
                           Navigator.pop(context);
+
+                          // Navigator.pushAndRemoveUntil(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => SignUpWidget()),
+                          //     (route) => false);
                         } catch (e) {
                           print('logging out error: ' + e.toString());
                         }
