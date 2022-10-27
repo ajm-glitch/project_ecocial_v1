@@ -24,7 +24,7 @@ class PostReactionsWidget extends StatefulWidget {
 class _PostReactionsWidgetState extends State<PostReactionsWidget> {
   LikesDb likesDb = LikesDb();
   bool isLikedByMe = false;
-  int numLikes = 0;
+  String numLikes = '0';
   int numComments = 0;
 
   @override
@@ -39,19 +39,36 @@ class _PostReactionsWidgetState extends State<PostReactionsWidget> {
         deactivate();
       }
     });
-    likesDb.getNumLikes(widget.postData.id).then((value) {
-      if (mounted) {
-        setState(() {
-          numLikes = value;
-        });
-        deactivate();
-      }
-    });
+    fetchNumLikes();
     CommentsDb commentsDb = new CommentsDb();
     commentsDb.getNumComments(widget.postData.id).then((value) {
       setState(() {
         numComments = value;
       });
+    });
+  }
+
+  void fetchNumLikes() {
+    likesDb.getNumLikes(widget.postData.id).then((value) {
+      if (mounted) {
+        setState(() {
+          int thousands = value/1000.round().ceil() as int;
+          int hundreds = 0;
+          if (thousands > 0) {
+            hundreds = (value - thousands*1000)/100.round() as int;
+          }
+          else {
+            hundreds = value/100.round() as int;
+          }
+          if (thousands > 0) {
+            numLikes = '$thousands.${hundreds}K';
+          }
+          else {
+            numLikes = value.toString();
+          }
+        });
+        deactivate();
+      }
     });
   }
 
@@ -83,7 +100,7 @@ class _PostReactionsWidgetState extends State<PostReactionsWidget> {
         ),
         SizedBox(width: 20),
         Text(
-          numLikes.toString(),
+          numLikes,
           style: TextStyle(
             color: Color.fromRGBO(117, 117, 117, 1),
           ),
@@ -91,11 +108,14 @@ class _PostReactionsWidgetState extends State<PostReactionsWidget> {
         IconButton(
           onPressed: () async {
             await likesDb.handleLikePost(currentUser?.uid, widget.postData.id);
-            int tempNumLikes = await likesDb.getNumLikes(widget.postData.id);
-            setState(() {
-              isLikedByMe = !isLikedByMe;
-              numLikes = tempNumLikes;
-            });
+            // int tempNumLikes = await likesDb.getNumLikes(widget.postData.id);
+            // setState(() {
+            //   isLikedByMe = !isLikedByMe;
+            //   numLikes = tempNumLikes.toString();
+            // });
+            fetchNumLikes();
+            isLikedByMe = !isLikedByMe;
+            setState(() {});
           },
           icon:
               isLikedByMe ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
