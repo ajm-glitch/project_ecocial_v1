@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:project_ecocial/authentication/google_sign_in_provider.dart';
 import 'package:project_ecocial/database/user_db.dart';
 import 'package:project_ecocial/screens/smallerWidgets/constants.dart';
+import 'package:project_ecocial/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
@@ -108,14 +109,15 @@ class _AccountSettingsState extends State<AccountSettings> {
                             context,
                             listen: false);
                         try {
-                          await provider.logOut();
-                          Navigator.pop(context);
+                          await provider.logOut(context);
+                          // Navigator.pop(context);
+                          // Navigator.pop(context);
 
-                          // Navigator.pushAndRemoveUntil(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => SignUpWidget()),
-                          //     (route) => false);
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Wrapper()),
+                              (route) => false);
                         } catch (e) {
                           print('logging out error: ' + e.toString());
                         }

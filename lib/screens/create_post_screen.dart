@@ -248,8 +248,7 @@ _showSuccessAlertDialog(BuildContext context) {
         Navigator.pop(context);
         // Navigator.pushNamed(context, '/home_screen');
         Navigator.pop(context);
-        // Navigator.push(
-        //     context, MaterialPageRoute(builder: (context) => HomeFeed()));
+        Navigator.pushNamed(context, '/home_screen');
       },
       icon: Icon(
         Icons.close,

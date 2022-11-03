@@ -46,12 +46,18 @@ class GoogleSignInProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> logOut() async {
+  Future<void> logOut(BuildContext context) async {
     User currentUser = FirebaseAuth.instance.currentUser!;
 
     if (currentUser.providerData[0].providerId == 'google.com') {
       await googleSignIn.disconnect();
     }
     await FirebaseAuth.instance.signOut();
+    // Navigator.push(
+    //     context, MaterialPageRoute(builder: (context) => SignUpWidget()));
+    // Navigator.pushAndRemoveUntil(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => SignUpWidget()),
+    //     (route) => false);
   }
 }
