@@ -24,7 +24,7 @@ class PostReactionsWidget extends StatefulWidget {
 class _PostReactionsWidgetState extends State<PostReactionsWidget> {
   LikesDb likesDb = LikesDb();
   bool isLikedByMe = false;
-  int numLikes = 0;
+  String numLikes = '0';
   int numComments = 0;
 
   @override
@@ -42,7 +42,7 @@ class _PostReactionsWidgetState extends State<PostReactionsWidget> {
     likesDb.getNumLikes(widget.postData.id).then((value) {
       if (mounted) {
         setState(() {
-          numLikes = value;
+          numLikes = value.toString();
         });
         deactivate();
       }
@@ -52,6 +52,27 @@ class _PostReactionsWidgetState extends State<PostReactionsWidget> {
       setState(() {
         numComments = value;
       });
+    });
+  }
+
+  void fetchNumLikes() async {
+    await likesDb.getNumLikes(widget.postData.id).then((value) {
+      if (mounted) {
+        int thousands = (value / 1000).floor();
+        int hundreds = 0;
+        if (thousands > 0) {
+          hundreds = ((value - (thousands * 1000)) / 100).round();
+        } else {
+          hundreds = (value / 100).round();
+        }
+        if (thousands > 0 && hundreds > 0) {
+          numLikes = '$thousands.${hundreds}K';
+        } else if (thousands > 0) {
+          numLikes = '${thousands}K';
+        } else {
+          numLikes = value.toString();
+        }
+      }
     });
   }
 
@@ -91,17 +112,14 @@ class _PostReactionsWidgetState extends State<PostReactionsWidget> {
         IconButton(
           onPressed: () async {
             await likesDb.handleLikePost(currentUser?.uid, widget.postData.id);
-            int tempNumLikes = await likesDb.getNumLikes(widget.postData.id);
+
+            fetchNumLikes();
             setState(() {
               isLikedByMe = !isLikedByMe;
-              numLikes = tempNumLikes;
             });
           },
           icon:
               isLikedByMe ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
-          // likeController.likeStatus
-          //     ? Icon(Icons.favorite)
-          //     : Icon(Icons.favorite_border),
           color: Color.fromRGBO(101, 171, 200, 1),
         ),
         SizedBox(width: 20),
