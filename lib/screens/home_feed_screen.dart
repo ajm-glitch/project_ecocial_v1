@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_ecocial/database/notifiers/post_notifier.dart';
+import 'package:project_ecocial/screens/create_post_screen.dart';
 import 'package:project_ecocial/screens/smallerWidgets/postCard.dart';
 import 'package:provider/provider.dart';
 
@@ -39,9 +40,8 @@ class _HomeFeedState extends State<HomeFeed> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Navigator.push(context,
-          //     MaterialPageRoute(builder: (context) => CreatePostScreen()));
-          Navigator.pushNamed(context, '/create_post_screen');
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => CreatePostScreen()));
         },
         child: Icon(Icons.post_add),
         foregroundColor: Colors.white,

@@ -6,7 +6,6 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:project_ecocial/database/notifiers/my_posts_notifier.dart';
 import 'package:project_ecocial/database/notifiers/post_notifier.dart';
 import 'package:project_ecocial/screens/account_settings_screen.dart';
-import 'package:project_ecocial/screens/create_post_screen.dart';
 import 'package:project_ecocial/screens/home_feed_screen.dart';
 import 'package:project_ecocial/screens/my_posts_screen.dart';
 import 'package:project_ecocial/screens/wrapper.dart';
@@ -44,7 +43,6 @@ class MyApp extends StatelessWidget {
           '/home_screen': (context) => HomeFeed(),
           '/account_settings_screen': (context) => AccountSettings(),
           '/my_posts_screen': (context) => MyPostsScreen(),
-          '/create_post_screen': (context) => CreatePostScreen(),
         },
         theme: ThemeData(
           primaryColor: Color.fromRGBO(101, 171, 200, 1),
