@@ -46,7 +46,7 @@ class GoogleSignInProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> logOut(BuildContext context) async {
+  Future<void> logOut() async {
     User currentUser = FirebaseAuth.instance.currentUser!;
 
     if (currentUser.providerData[0].providerId == 'google.com') {

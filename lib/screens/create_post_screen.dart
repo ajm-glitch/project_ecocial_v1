@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project_ecocial/database/posting_db.dart';
 import 'package:project_ecocial/database/user_db.dart';
-import 'package:project_ecocial/screens/home_feed_screen.dart';
 import 'package:project_ecocial/screens/smallerWidgets/constants.dart';
 
 import '../controllers/controller_instance.dart';
@@ -214,7 +213,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                         if (success) {
                           Navigator.pop(context);
                           _showSuccessAlertDialog(context);
-                          noPostsAvailable = false;
+                          // noPostsAvailable = false;
                           // noMyPostsAvailable = false;
                           myPostController.updateAvailablePost(false);
                         } else {
@@ -248,7 +247,7 @@ _showSuccessAlertDialog(BuildContext context) {
         Navigator.pop(context);
         // Navigator.pushNamed(context, '/home_screen');
         Navigator.pop(context);
-        Navigator.pushNamed(context, '/home_screen');
+        // Navigator.pushNamed(context, '/home_screen');
       },
       icon: Icon(
         Icons.close,

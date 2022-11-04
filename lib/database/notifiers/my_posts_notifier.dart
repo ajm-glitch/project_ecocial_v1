@@ -12,8 +12,8 @@ class MyPostsNotifier extends ChangeNotifier {
 
   List<PostModel> get myPostsList => _myPostsList;
   final _dbReference = FirebaseDatabase.instance.reference();
-  late StreamSubscription<Event> _myPostStream;
-
+  // late StreamSubscription<Event> _myPostStream;
+  var _myPostStream;
   // MyPostsNotifier() {
   //   listenToPosts();
   // }
@@ -94,7 +94,11 @@ class MyPostsNotifier extends ChangeNotifier {
 
   @override
   void dispose() {
-    _myPostStream.cancel();
+    closeListener();
     super.dispose();
+  }
+
+  void closeListener() {
+    _myPostStream?.cancel();
   }
 }

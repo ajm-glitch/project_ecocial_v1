@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:project_ecocial/controllers/controller_instance.dart';
 import 'package:project_ecocial/database/notifiers/post_notifier.dart';
 import 'package:project_ecocial/screens/smallerWidgets/postCard.dart';
 import 'package:provider/provider.dart';
 
+import '../models/post_model.dart';
 import 'navigation/navigation_drawer_widget.dart';
 
-bool noPostsAvailable = false;
+// bool noPostsAvailable = false;
 
 class HomeFeed extends StatefulWidget {
   @override
@@ -47,10 +50,11 @@ class _HomeFeedState extends State<HomeFeed> {
         foregroundColor: Colors.white,
         backgroundColor: Color.fromRGBO(90, 155, 115, 1),
       ),
-      body: noPostsAvailable
+      body: Obx(() => homePostController.postList.length == 0
           ? noPosts
           : Consumer<PostNotifier>(
               builder: (context, model, child) {
+                print('OBSERVABLE UPDATED: ${homePostController.postCount}');
                 return Column(
                   children: [
                     Expanded(
@@ -66,7 +70,15 @@ class _HomeFeedState extends State<HomeFeed> {
                   ],
                 );
               },
-            ),
+            )),
+    );
+  }
+
+  Widget loadPost(PostModel post) {
+    print('LOADPOST: ${post.title}');
+    return PostCard(
+      postData: post,
+      isMyPost: false,
     );
   }
 }

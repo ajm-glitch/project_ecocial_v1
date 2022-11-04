@@ -1,37 +1,45 @@
 import 'dart:async';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:project_ecocial/controllers/controller_instance.dart';
 import 'package:project_ecocial/models/post_model.dart';
-import '../../screens/home_feed_screen.dart';
 
 class PostNotifier extends ChangeNotifier {
-
   List<PostModel> _postList = [];
 
   List<PostModel> get postList => _postList;
   final _dbReference = FirebaseDatabase.instance.reference();
-  late StreamSubscription<Event> _postStream;
-
+  // late StreamSubscription<Event> _postStream;
+  var _postStream;
   PostNotifier() {
-    _listenToPosts();
+    listenToPosts();
   }
 
-  Future<bool> _listenToPosts() async { // being called twice from home feed, once from constructor, once from reloadPosts()
+  Future<bool> listenToPosts() async {
+    // being called twice from home feed, once from constructor, once from reloadPosts()
     bool result = await anyPostsExist();
     if (!result) {
-      noPostsAvailable = true;
+      // noPostsAvailable = true;
       return result;
     }
-    _postStream = _dbReference.child("posts").orderByChild("postOrder").onValue.listen((event) {
+    _postStream = _dbReference
+        .child("posts")
+        .orderByChild("postOrder")
+        .onValue
+        .listen((event) {
+      print('POST LISTENER');
       if (event.snapshot.value == null) {
-        noPostsAvailable = true;
+        // noPostsAvailable = true;
         print("no posts available");
-      }
-      else {
+      } else {
         final allPosts = Map<String, dynamic>.from(event.snapshot.value);
         _postList = allPosts.values.map((postsAsJSON) {
           return PostModel.fromRTDB(Map<String, dynamic>.from(postsAsJSON));
         }).toList();
+        homePostController.updatePostList(_postList);
+        print('POST SIZE: ${_postList.length}');
+        homePostController.updatePostCount(_postList.length);
         for (var i = 0; i < _postList.length; i++) {
           _postList[i].id = allPosts.keys.elementAt(i);
         }
@@ -43,19 +51,20 @@ class PostNotifier extends ChangeNotifier {
 
   @override
   void dispose() {
-    _postStream.cancel();
+    closeListener();
     super.dispose();
   }
 
+  void closeListener() {
+    _postStream?.cancel();
+  }
+
   Future<bool> reloadPosts() async {
-   // _postStream.cancel();
-    //print("reloadPosts called");
-    return await _listenToPosts();
+    return await listenToPosts();
   }
 
   Future<bool> anyPostsExist() async {
     DataSnapshot snapshot = await _dbReference.child("posts").get();
     return snapshot.value != null;
   }
-
 }
