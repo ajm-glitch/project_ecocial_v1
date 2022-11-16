@@ -46,17 +46,15 @@ dependencies:
   # Sign in with apple credentials
   sign_in_with_apple: ^4.1.0
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.10.0
 flutter_icons:
-  android: "launcher_icon"
+#  android: "launcher_icon"
+  android: true
   ios: true
-  remove_alpha_ios: true
-  adaptive_icon_background: "#ffffff"
-  image_path: "assets/ecocialIcon.png"
+  image_path: "assets/app_logo.jpg"
 
 
 # For information on the generic Dart part of this file, see the
