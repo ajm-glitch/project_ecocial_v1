@@ -6,6 +6,10 @@ import 'package:project_ecocial/screens/smallerWidgets/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
+import '../database/notifiers/comment_notifier.dart';
+import '../database/notifiers/my_posts_notifier.dart';
+import '../database/notifiers/post_notifier.dart';
+
 class AccountSettings extends StatefulWidget {
   const AccountSettings({Key? key}) : super(key: key);
 
@@ -110,14 +114,12 @@ class _AccountSettingsState extends State<AccountSettings> {
                           Provider.of<GoogleSignInProvider>(context,
                                   listen: false)
                               .logOut();
-                          // Navigator.pop(context);
-                          // Navigator.pop(context);
-                          //
-                          // Navigator.pushAndRemoveUntil(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => Wrapper()),
-                          //     (route) => false);
+                          Provider.of<PostNotifier>(context, listen: false)
+                              .closeListener();
+                          Provider.of<MyPostsNotifier>(context, listen: false)
+                              .closeListener();
+                          Provider.of<CommentNotifier>(context, listen: false)
+                              .closeListener();
                         } catch (e) {
                           print('logging out error: ' + e.toString());
                         }

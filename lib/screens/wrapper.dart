@@ -7,10 +7,10 @@ import 'package:provider/provider.dart';
 import '../database/notifiers/comment_notifier.dart';
 import '../database/notifiers/my_posts_notifier.dart';
 import '../database/notifiers/post_notifier.dart';
+import '../services/share_preferences.dart';
 
 class Wrapper extends StatelessWidget {
-  const Wrapper({Key? key}) : super(key: key);
-
+  bool firstTimer = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,16 +30,24 @@ class Wrapper extends StatelessWidget {
                 .listenToComments();
 
             return HomeFeed();
-          } else if (snapshot.data == null) {
-            print('IT IS NULL');
-            Provider.of<PostNotifier>(context, listen: false).closeListener();
-            Provider.of<MyPostsNotifier>(context, listen: false)
-                .closeListener();
-            Provider.of<CommentNotifier>(context, listen: false)
-                .closeListener();
-            return SignUpWidget();
           } else {
-            return SignUpWidget();
+            print('NULL');
+            return FutureBuilder<String>(
+                future: SharePreferenceActions().firstTime(),
+                builder: (context, AsyncSnapshot<String> snapshot) {
+                  if (snapshot.hasData) {
+                    SharePreferenceActions().updateFirstTime(false);
+                    if (snapshot.data! == 'true') {
+                      return Center(
+                        child: Text('FIRST TIME'),
+                      );
+                    } else {
+                      return SignUpWidget();
+                    }
+                  } else {
+                    return CircularProgressIndicator();
+                  }
+                });
           }
         },
       ),

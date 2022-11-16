@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:project_ecocial/screens/smallerWidgets/google_sign_up_button.dart';
 
 class SignUpWidget extends StatelessWidget {
-  const SignUpWidget({Key? key}) : super(key: key);
-//just a comment
   @override
   Widget build(BuildContext context) {
     return Container(
