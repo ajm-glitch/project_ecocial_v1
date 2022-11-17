@@ -12,13 +12,43 @@ class Wrapper extends StatelessWidget {
       body: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          print(
-              'WRAPPER CALLED: ${snapshot}, ${snapshot.data}, ${snapshot.connectionState}');
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasData) {
+<<<<<<< Updated upstream
+||||||| constructed merge base
+            print('NOT NULL');
+            Provider.of<PostNotifier>(context, listen: false).listenToPosts();
+            Provider.of<MyPostsNotifier>(context, listen: false)
+                .listenToPosts();
+            Provider.of<CommentNotifier>(context, listen: false)
+                .listenToComments();
+
+=======
+            Provider.of<PostNotifier>(context, listen: false).listenToPosts();
+            Provider.of<MyPostsNotifier>(context, listen: false)
+                .listenToPosts();
+            Provider.of<CommentNotifier>(context, listen: false)
+                .listenToComments();
+
+>>>>>>> Stashed changes
             return HomeFeed();
           } else if (snapshot.data == null) {
+<<<<<<< Updated upstream
+||||||| constructed merge base
+            print('IT IS NULL');
+            Provider.of<PostNotifier>(context, listen: false).closeListener();
+            Provider.of<MyPostsNotifier>(context, listen: false)
+                .closeListener();
+            Provider.of<CommentNotifier>(context, listen: false)
+                .closeListener();
+=======
+            Provider.of<PostNotifier>(context, listen: false).closeListener();
+            Provider.of<MyPostsNotifier>(context, listen: false)
+                .closeListener();
+            Provider.of<CommentNotifier>(context, listen: false)
+                .closeListener();
+>>>>>>> Stashed changes
             return SignUpWidget();
           } else {
             return SignUpWidget();

@@ -15,11 +15,19 @@
       },
       "oauth_client": [
         {
-          "client_id": "509876696425-08tlsq24k3rnibe11k7ilvb9c19ahf8j.apps.googleusercontent.com",
+          "client_id": "509876696425-ofdr48ek9o4i4pilfbe171uegufodrd3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ecocialapp.germination1",
             "certificate_hash": "bea3239e348ccf131be0efcb21a234f1210c3671"
+          }
+        },
+        {
+          "client_id": "509876696425-p2oisd2afgqu34tout58ncsa17623kcq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ecocialapp.germination1",
+            "certificate_hash": "249fb5ae141fa47cad880d977a5838d3c4dff179"
           }
         },
         {

@@ -18,7 +18,6 @@ class CommentNotifier extends ChangeNotifier {
   }
 
   CommentNotifier() {
-    print("calling comments initializer");
     // listenToComments();
   }
 
@@ -31,7 +30,6 @@ class CommentNotifier extends ChangeNotifier {
     // }
     commentStream = _dbReference.child("posts").child(postId).child('comments').onValue.listen((event) {
       if (event.snapshot.value == null) {
-        print("no comments available");
         return;
       }
       else {
@@ -50,7 +48,22 @@ class CommentNotifier extends ChangeNotifier {
   @override
   void dispose() {
     super.dispose();
+<<<<<<< Updated upstream
     print("dispose called on comments");
+||||||| constructed merge base
+    print("dispose called on comments");
+    closeListener();
+  }
+
+  void closeListener() {
+    commentStream?.cancel();
+=======
+    closeListener();
+  }
+
+  void closeListener() {
+    commentStream?.cancel();
+>>>>>>> Stashed changes
     _commentList = [];
     commentStream.cancel();
   }

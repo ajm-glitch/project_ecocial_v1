@@ -22,16 +22,49 @@ class PostNotifier extends ChangeNotifier {
       noPostsAvailable = true;
       return result;
     }
+<<<<<<< Updated upstream
     _postStream = _dbReference.child("posts").orderByChild("postOrder").onValue.listen((event) {
+||||||| constructed merge base
+    _postStream = _dbReference
+        .child("posts")
+        .orderByChild("postOrder")
+        .onValue
+        .listen((event) {
+      print('POST LISTENER');
+=======
+    _postStream = _dbReference
+        .child("posts")
+        .orderByChild("postOrder")
+        .onValue
+        .listen((event) {
+>>>>>>> Stashed changes
       if (event.snapshot.value == null) {
+<<<<<<< Updated upstream
         noPostsAvailable = true;
         print("no posts available");
       }
       else {
+||||||| constructed merge base
+        // noPostsAvailable = true;
+        print("no posts available");
+      } else {
+=======
+        // noPostsAvailable = true;
+      } else {
+>>>>>>> Stashed changes
         final allPosts = Map<String, dynamic>.from(event.snapshot.value);
         _postList = allPosts.values.map((postsAsJSON) {
           return PostModel.fromRTDB(Map<String, dynamic>.from(postsAsJSON));
         }).toList();
+<<<<<<< Updated upstream
+||||||| constructed merge base
+        homePostController.updatePostList(_postList);
+        print('POST SIZE: ${_postList.length}');
+        homePostController.updatePostCount(_postList.length);
+=======
+        homePostController.updatePostList(_postList);
+        homePostController.updatePostCount(_postList.length);
+>>>>>>> Stashed changes
         for (var i = 0; i < _postList.length; i++) {
           _postList[i].id = allPosts.keys.elementAt(i);
         }

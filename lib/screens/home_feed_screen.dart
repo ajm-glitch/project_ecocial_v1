@@ -66,7 +66,28 @@ class _HomeFeedState extends State<HomeFeed> {
                   ],
                 );
               },
+<<<<<<< Updated upstream
             ),
+||||||| constructed merge base
+            )),
+    );
+  }
+
+  Widget loadPost(PostModel post) {
+    print('LOADPOST: ${post.title}');
+    return PostCard(
+      postData: post,
+      isMyPost: false,
+=======
+            )),
+    );
+  }
+
+  Widget loadPost(PostModel post) {
+    return PostCard(
+      postData: post,
+      isMyPost: false,
+>>>>>>> Stashed changes
     );
   }
 }
