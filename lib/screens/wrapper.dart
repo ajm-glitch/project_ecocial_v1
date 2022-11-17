@@ -8,6 +8,7 @@ import '../database/notifiers/comment_notifier.dart';
 import '../database/notifiers/my_posts_notifier.dart';
 import '../database/notifiers/post_notifier.dart';
 import '../services/share_preferences.dart';
+import 'first_time_welcome_screen.dart';
 
 class Wrapper extends StatelessWidget {
   bool firstTimer = false;
@@ -38,9 +39,7 @@ class Wrapper extends StatelessWidget {
                   if (snapshot.hasData) {
                     SharePreferenceActions().updateFirstTime(false);
                     if (snapshot.data! == 'true') {
-                      return Center(
-                        child: Text('FIRST TIME'),
-                      );
+                      return FirstTimeWelcomeScreen();
                     } else {
                       return SignUpWidget();
                     }

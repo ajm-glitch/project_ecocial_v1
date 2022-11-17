@@ -6,7 +6,6 @@ import 'home_post_controller.dart';
 
 class DataManagerController extends GetxController {
   static DataManagerController instance = Get.find();
-  final FirebaseAuth auth = FirebaseAuth.instance;
 
   void initializeControllers() {
     Get.put(MyPostController());
