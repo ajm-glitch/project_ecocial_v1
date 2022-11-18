@@ -9,19 +9,19 @@ class FirstTimeWelcomeScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: 100),
+          SizedBox(height: 70),
           Image(
             image: AssetImage('assets/greenNeighborhood.png'),
           ),
           SizedBox(height: 70),
-          Center(
-            child: Text(
-              'Welcome to Ecocial community!',
-              style: TextStyle(
-                fontSize: 28,
-                color: Colors.black,
-              ),
+          Text(
+            'Welcome to the Ecocial community!',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 28,
+              color: Colors.black,
             ),
           ),
           SizedBox(height: 30),
@@ -30,6 +30,7 @@ class FirstTimeWelcomeScreen extends StatelessWidget {
             child: Center(
               child: Text(
                 'The idea is for people to take small everyday eco-friendly actions (such as carpooling with friends or recycling a plastic bottle from the street) and post about it here. Others will view these posts and provide encouragement for these actions by liking and/or commenting on posts.',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.black,
