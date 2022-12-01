@@ -38,7 +38,6 @@ class PostNotifier extends ChangeNotifier {
           return PostModel.fromRTDB(Map<String, dynamic>.from(postsAsJSON));
         }).toList();
         homePostController.updatePostList(_postList);
-        print('POST SIZE: ${_postList.length}');
         homePostController.updatePostCount(_postList.length);
         for (var i = 0; i < _postList.length; i++) {
           _postList[i].id = allPosts.keys.elementAt(i);

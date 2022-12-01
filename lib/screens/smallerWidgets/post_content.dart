@@ -1,8 +1,7 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'dart:ffi';
-import 'dart:io';
+
 import '../../models/post_model.dart';
 
 class PostContent extends StatefulWidget {
@@ -14,18 +13,20 @@ class PostContent extends StatefulWidget {
 }
 
 class _PostContentState extends State<PostContent> {
-
   String imageDownloadUrl = "";
 
-  void initState()  {
+  void initState() {
     super.initState();
-    getDownloadUrl().then((value) {
-      if (mounted) {
-        setState(() {
-          imageDownloadUrl = value;
-        });
-      }
-    });
+    print('IMAGEPATH: ${widget.postData.imagePath}');
+    if (widget.postData.imagePath.isNotEmpty) {
+      getDownloadUrl().then((value) {
+        if (mounted) {
+          setState(() {
+            imageDownloadUrl = value;
+          });
+        }
+      });
+    }
   }
 
   Future<String> getDownloadUrl() async {
@@ -45,7 +46,8 @@ class _PostContentState extends State<PostContent> {
     String title = widget.postData.title;
     String content = widget.postData.body;
     DateTime postTime = widget.postData.postTime;
-    String formattedPostTime = DateFormat('yyyy-MM-dd – kk:mm').format(postTime);
+    String formattedPostTime =
+        DateFormat('yyyy-MM-dd – kk:mm').format(postTime);
     String username = widget.postData.username;
     return Container(
       child: Column(
@@ -55,7 +57,9 @@ class _PostContentState extends State<PostContent> {
           // Image(
           //   image: AssetImage(imagePath),
           // ),
-          imageDownloadUrl != "" ? Image.network(imageDownloadUrl) : SizedBox(height: 0,),
+          imageDownloadUrl != ""
+              ? Image.network(imageDownloadUrl)
+              : Container(),
           // imagePath != "" ? Image.file(File(imagePath)) : SizedBox(height: 0,),
           SizedBox(height: 10),
           Text(
@@ -74,8 +78,7 @@ class _PostContentState extends State<PostContent> {
                     color: Color.fromRGBO(117, 117, 117, 1),
                     fontWeight: FontWeight.bold,
                     fontSize: 12,
-                    letterSpacing: 0.4
-                ),
+                    letterSpacing: 0.4),
               ),
               Text(
                 formattedPostTime,
