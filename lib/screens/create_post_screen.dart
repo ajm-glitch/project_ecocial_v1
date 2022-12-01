@@ -48,7 +48,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
         this.imageFile = realFile;
       });
     } on PlatformException catch (e) {
-      print("Failed to pick image: $e");
+      debugPrint("Failed to pick image: $e");
     }
   }
 
@@ -247,7 +247,7 @@ _showSuccessAlertDialog(BuildContext context) {
         Navigator.pop(context);
         // Navigator.pushNamed(context, '/home_screen');
         Navigator.pop(context);
-        // Navigator.pushNamed(context, '/home_screen');
+        Navigator.pushNamed(context, '/home_screen');
       },
       icon: Icon(
         Icons.close,

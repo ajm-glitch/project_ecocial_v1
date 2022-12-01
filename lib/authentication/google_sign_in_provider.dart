@@ -53,8 +53,7 @@ class GoogleSignInProvider extends ChangeNotifier {
       await googleSignIn.disconnect();
     }
     await FirebaseAuth.instance.signOut();
-    // Navigator.push(
-    //     context, MaterialPageRoute(builder: (context) => SignUpWidget()));
+
     // Navigator.pushAndRemoveUntil(
     //     context,
     //     MaterialPageRoute(builder: (context) => SignUpWidget()),

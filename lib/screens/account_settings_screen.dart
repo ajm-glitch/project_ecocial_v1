@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:project_ecocial/authentication/google_sign_in_provider.dart';
 import 'package:project_ecocial/database/user_db.dart';
 import 'package:project_ecocial/screens/smallerWidgets/constants.dart';
+import 'package:project_ecocial/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
@@ -86,7 +87,7 @@ class _AccountSettingsState extends State<AccountSettings> {
                           if (result1 == true && result2 == true) {
                             Toast.show("Saved!", duration: Toast.lengthShort);
                           } else {
-                            print("error updating username");
+                            debugPrint("error updating username");
                           }
                         },
                         elevation: 2.0,
@@ -109,19 +110,23 @@ class _AccountSettingsState extends State<AccountSettings> {
                       heroTag: "logOutButton",
                       onPressed: () async {
                         try {
-                          Navigator.pop(context);
-
-                          Provider.of<GoogleSignInProvider>(context,
-                                  listen: false)
-                              .logOut();
                           Provider.of<PostNotifier>(context, listen: false)
                               .closeListener();
                           Provider.of<MyPostsNotifier>(context, listen: false)
                               .closeListener();
                           Provider.of<CommentNotifier>(context, listen: false)
                               .closeListener();
+                          // Navigator.pop(context);
+
+                          Provider.of<GoogleSignInProvider>(context,
+                                  listen: false)
+                              .logOut();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Wrapper()));
                         } catch (e) {
-                          print('logging out error: ' + e.toString());
+                          debugPrint('logging out error: ' + e.toString());
                         }
                       },
                       elevation: 2.0,

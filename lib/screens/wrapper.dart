@@ -18,12 +18,9 @@ class Wrapper extends StatelessWidget {
       body: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          print(
-              'WRAPPER CALLED: ${snapshot}, ${snapshot.data}, ${snapshot.connectionState}');
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasData) {
-            print('NOT NULL');
             Provider.of<PostNotifier>(context, listen: false).listenToPosts();
             Provider.of<MyPostsNotifier>(context, listen: false)
                 .listenToPosts();
@@ -32,7 +29,6 @@ class Wrapper extends StatelessWidget {
 
             return HomeFeed();
           } else {
-            print('NULL');
             return FutureBuilder<String>(
                 future: SharePreferenceActions().firstTime(),
                 builder: (context, AsyncSnapshot<String> snapshot) {

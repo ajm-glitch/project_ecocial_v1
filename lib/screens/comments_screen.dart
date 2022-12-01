@@ -98,7 +98,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                               Navigator.pop(context);
                               commentController.clear();
                             } else {
-                              print("error in posting comment");
+                              debugPrint("error in posting comment");
                             }
                           },
                           child: Text(
@@ -136,11 +136,11 @@ class _CommentsScreenState extends State<CommentsScreen> {
                 return Column(
                   children: [
                     Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: postCommentWidget,
-                        ),
-                        flex: 0,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: postCommentWidget,
+                      ),
+                      flex: 0,
                     ),
                     Expanded(
                       flex: 3,

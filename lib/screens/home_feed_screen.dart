@@ -54,7 +54,6 @@ class _HomeFeedState extends State<HomeFeed> {
           ? noPosts
           : Consumer<PostNotifier>(
               builder: (context, model, child) {
-                print('OBSERVABLE UPDATED: ${homePostController.postCount}');
                 return Column(
                   children: [
                     Expanded(
@@ -75,7 +74,6 @@ class _HomeFeedState extends State<HomeFeed> {
   }
 
   Widget loadPost(PostModel post) {
-    print('LOADPOST: ${post.title}');
     return PostCard(
       postData: post,
       isMyPost: false,

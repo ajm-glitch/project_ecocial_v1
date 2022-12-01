@@ -5,7 +5,6 @@ import 'package:project_ecocial/controllers/controller_instance.dart';
 import 'package:toast/toast.dart';
 
 import '../../database/delete_post_db.dart';
-import '../my_posts_screen.dart';
 
 Widget deletePostWidget(BuildContext context, postId) {
   IconButton deletePostIcon = IconButton(
@@ -27,14 +26,15 @@ _showDeleteAlertDialog(BuildContext context, String postId) {
   );
   Widget yesButton = TextButton(
     onPressed: () async {
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => Center(), // child: CircularProgressIndicator()
-      );
+      // showDialog(
+      //   context: context,
+      //   barrierDismissible: false,
+      //   builder: (context) => Center(), // child: CircularProgressIndicator()
+      // );
+      // Navigator.pop(context);
       Navigator.pop(context);
-      Navigator.pop(context);
-      DeletePostDb deletePostDb = new DeletePostDb();
+      // Navigator.pushNamed(context, '/my_posts_screen');
+      DeletePostDb deletePostDb = DeletePostDb();
       bool success = await deletePostDb.deletePost(postId);
       if (success) {
         final currentUser = FirebaseAuth.instance.currentUser;
@@ -42,10 +42,12 @@ _showDeleteAlertDialog(BuildContext context, String postId) {
         bool myPostsExist = await anyMyPostsExist(uid!);
         if (!myPostsExist) {
           Navigator.pop(context);
+          Navigator.pop(context);
           // noMyPostsAvailable = true;
           myPostController.updateAvailablePost(true);
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => MyPostsScreen()));
+          // Navigator.push(context,
+          //     MaterialPageRoute(builder: (context) => MyPostsScreen()));
+          // Navigator.pushNamed(context, '/my_posts_screen');
         }
       } else {
         Toast.show("Unable to delete post!", duration: Toast.lengthShort);

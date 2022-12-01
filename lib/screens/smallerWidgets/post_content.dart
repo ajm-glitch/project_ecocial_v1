@@ -17,7 +17,6 @@ class _PostContentState extends State<PostContent> {
 
   void initState() {
     super.initState();
-    print('IMAGEPATH: ${widget.postData.imagePath}');
     if (widget.postData.imagePath.isNotEmpty) {
       getDownloadUrl().then((value) {
         if (mounted) {
