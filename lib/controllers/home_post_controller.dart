@@ -22,7 +22,6 @@ class HomePostController extends GetxController {
   }
 
   void updatePostList(List<PostModel> newList) {
-    print('UPDATE: ${newList.length}');
     _postList.value = newList;
   }
 

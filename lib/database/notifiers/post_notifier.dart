@@ -28,10 +28,9 @@ class PostNotifier extends ChangeNotifier {
         .orderByChild("postOrder")
         .onValue
         .listen((event) {
-      print('LISTENER TRIGGERED');
       if (event.snapshot.value == null) {
         // noPostsAvailable = true;
-        print("no posts available");
+        debugPrint("no posts available");
       } else {
         final allPosts = Map<String, dynamic>.from(event.snapshot.value);
         _postList = allPosts.values.map((postsAsJSON) {
@@ -41,7 +40,6 @@ class PostNotifier extends ChangeNotifier {
         homePostController.updatePostCount(_postList.length);
         for (var i = 0; i < _postList.length; i++) {
           _postList[i].id = allPosts.keys.elementAt(i);
-          print('IMAGE PATH: ${_postList[i].imagePath}');
         }
         notifyListeners();
       }

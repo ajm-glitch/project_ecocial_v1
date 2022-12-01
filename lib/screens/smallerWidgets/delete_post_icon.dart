@@ -51,7 +51,7 @@ _showDeleteAlertDialog(BuildContext context, String postId) {
         }
       } else {
         Toast.show("Unable to delete post!", duration: Toast.lengthShort);
-        print('error in deleting post');
+        debugPrint('error in deleting post');
       }
     },
     child: Text("Yes"),
@@ -81,6 +81,6 @@ Future<bool> anyMyPostsExist(String uid) async {
   final _dbReference = FirebaseDatabase.instance.reference();
   DataSnapshot snapshot =
       await _dbReference.child("users").child(uid).child("postIds").get();
-  print(snapshot.value.toString());
+
   return snapshot.value != null;
 }

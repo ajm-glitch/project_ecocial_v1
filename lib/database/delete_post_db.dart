@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 
 class DeletePostDb {
-
   final databaseRef = FirebaseDatabase.instance.reference();
 
   Future<bool> deletePost(String postId) async {
@@ -10,9 +10,9 @@ class DeletePostDb {
     final postToBeDeletedRef = databaseRef.child("posts").child(postId);
     try {
       postToBeDeletedRef.remove();
-    } catch(e) {
+    } catch (e) {
       success = false;
-      print("error! " + e.toString());
+      debugPrint("error! " + e.toString());
       return success;
     }
     final currentUser = FirebaseAuth.instance.currentUser;
@@ -24,15 +24,17 @@ class DeletePostDb {
   Future<bool> removePostIdFromUser(String uid, String postId) async {
     bool success = false;
     try {
-      var postIdListRef = databaseRef.child("users").child(uid).child("postIds");
-      var postIdRef = await postIdListRef.once().then((DataSnapshot dataSnapshot) {
+      var postIdListRef =
+          databaseRef.child("users").child(uid).child("postIds");
+      var postIdRef =
+          await postIdListRef.once().then((DataSnapshot dataSnapshot) {
         var postIdList = dataSnapshot.value;
         int index = postIdList.indexOf(postId);
         postIdList.removeAt(index);
         repushPostIdList(postIdList, uid);
       });
-    } catch(e) {
-      print("error! " + e.toString());
+    } catch (e) {
+      debugPrint("error! " + e.toString());
       success = false;
     }
     success = true;
@@ -43,14 +45,11 @@ class DeletePostDb {
     bool success = true;
     DatabaseReference userRef = databaseRef.child("users").child(uid);
     try {
-      userRef.update({
-        "postIds": postIdList
-      });
-    } catch(e) {
+      userRef.update({"postIds": postIdList});
+    } catch (e) {
       success = false;
-      print("error! " + e.toString());
+      debugPrint("error! " + e.toString());
     }
     return success;
   }
-
 }
