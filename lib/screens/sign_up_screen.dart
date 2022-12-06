@@ -1,4 +1,7 @@
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
+import 'package:project_ecocial/screens/smallerWidgets/apple_sign_up_button.dart';
 import 'package:project_ecocial/screens/smallerWidgets/google_sign_up_button.dart';
 
 class SignUpWidget extends StatelessWidget {
@@ -19,6 +22,8 @@ class SignUpWidget extends StatelessWidget {
             ),
             SizedBox(height: 70),
             GoogleSignUpButtonWidget(),
+            SizedBox(height: 20),
+            Platform.isIOS ? AppleSignUpButtonWidget() : Container(),
           ],
         ),
       ),

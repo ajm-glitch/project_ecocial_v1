@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project_ecocial/authentication/google_sign_in_provider.dart';
 import 'package:project_ecocial/database/user_db.dart';
 import 'package:project_ecocial/screens/smallerWidgets/constants.dart';
 import 'package:project_ecocial/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
+import '../authentication/auth_service_provider.dart';
 import '../database/notifiers/comment_notifier.dart';
 import '../database/notifiers/my_posts_notifier.dart';
 import '../database/notifiers/post_notifier.dart';
@@ -118,7 +118,7 @@ class _AccountSettingsState extends State<AccountSettings> {
                               .closeListener();
                           // Navigator.pop(context);
 
-                          Provider.of<GoogleSignInProvider>(context,
+                          Provider.of<AuthServiceProvider>(context,
                                   listen: false)
                               .logOut();
                           Navigator.push(

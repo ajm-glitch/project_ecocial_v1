@@ -11,7 +11,7 @@ import 'package:project_ecocial/screens/my_posts_screen.dart';
 import 'package:project_ecocial/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 
-import 'authentication/google_sign_in_provider.dart';
+import 'authentication/auth_service_provider.dart';
 import 'controllers/controller_instance.dart';
 import 'controllers/data_manager_controller.dart';
 import 'database/notifiers/comment_notifier.dart';
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => GoogleSignInProvider()),
+        ChangeNotifierProvider(create: (_) => AuthServiceProvider()),
         ChangeNotifierProvider(create: (_) => PostNotifier()),
         ChangeNotifierProvider(create: (_) => MyPostsNotifier()),
         ChangeNotifierProvider(create: (_) => CommentNotifier()),

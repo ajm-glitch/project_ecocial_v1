@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 
 import '../../authentication/auth_service_provider.dart';
 
-class GoogleSignUpButtonWidget extends StatelessWidget {
-  const GoogleSignUpButtonWidget({Key? key}) : super(key: key);
+class AppleSignUpButtonWidget extends StatelessWidget {
+  const AppleSignUpButtonWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,19 +14,18 @@ class GoogleSignUpButtonWidget extends StatelessWidget {
         onPressed: () async {
           final provider =
               Provider.of<AuthServiceProvider>(context, listen: false);
-          await provider.googleLogIn();
-          // Provider.of<MyPostsNotifier>(context, listen: false).listenToPosts();
+          await provider.appleLogin();
         },
         elevation: 2.0,
         label: Text(
-          "Sign in with Google",
+          "Sign in with Apple",
           style: TextStyle(
             fontSize: 18,
           ),
         ),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        icon: FaIcon(FontAwesomeIcons.google, color: Colors.red),
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+        icon: FaIcon(FontAwesomeIcons.apple, color: Colors.white),
       ),
     );
   }
