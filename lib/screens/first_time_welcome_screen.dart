@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_ecocial/screens/sign_up_screen.dart';
+import 'package:project_ecocial/screens/wrapper.dart';
 
 class FirstTimeWelcomeScreen extends StatelessWidget {
   const FirstTimeWelcomeScreen({Key? key}) : super(key: key);
@@ -44,7 +45,7 @@ class FirstTimeWelcomeScreen extends StatelessWidget {
               heroTag: "getStartedButton",
               onPressed: () async {
                 Navigator.pushAndRemoveUntil(context,
-                    MaterialPageRoute(builder: (context) => SignUpWidget()), (route) => false);
+                    MaterialPageRoute(builder: (context) => Wrapper()), (route) => false);
               },
               elevation: 2.0,
               label: Text(
