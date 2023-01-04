@@ -7,24 +7,27 @@ import 'package:project_ecocial/screens/smallerWidgets/google_sign_up_button.dar
 class SignUpWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Center(
-        child: Column(
-          children: [
-            SizedBox(height: 110),
-            Image(
-              image: AssetImage('assets/ecocialIcon.png'),
-            ),
-            SizedBox(height: 40),
-            Image(
-              image: AssetImage('assets/greenNeighborhood.png'),
-            ),
-            SizedBox(height: 70),
-            GoogleSignUpButtonWidget(),
-            SizedBox(height: 20),
-            Platform.isIOS ? AppleSignUpButtonWidget() : Container(),
-          ],
+    return SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.only(right: 12.0, left: 12.0, top: 12.0, bottom: 30),
+        color: Colors.white,
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(height: 110),
+              Image(
+                image: AssetImage('assets/ecocialIcon.png'),
+              ),
+              SizedBox(height: 40),
+              Image(
+                image: AssetImage('assets/greenNeighborhood.png'),
+              ),
+              SizedBox(height: 70),
+              GoogleSignUpButtonWidget(),
+              SizedBox(height: 20),
+              Platform.isIOS ? AppleSignUpButtonWidget() : Container(),
+            ],
+          ),
         ),
       ),
     );
