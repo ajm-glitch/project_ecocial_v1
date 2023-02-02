@@ -7,17 +7,18 @@ class FirstTimeWelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.only(right: 12.0, left: 12.0, top: 12.0, bottom: 30),
+        padding: const EdgeInsets.all(12.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(height: 70),
+            SizedBox(height: height * 0.05),
             Image(
               image: AssetImage('assets/greenNeighborhood.png'),
             ),
-            SizedBox(height: 70),
+            SizedBox(height: height * 0.05),
             Text(
               'Welcome to the Ecocial community!',
               textAlign: TextAlign.center,
@@ -26,7 +27,7 @@ class FirstTimeWelcomeScreen extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: height * 0.05),
             Container(
               padding: const EdgeInsets.all(12.0),
               child: Center(
@@ -40,13 +41,15 @@ class FirstTimeWelcomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 50,),
+            SizedBox(height: height * 0.05),
             Container(
               child: FloatingActionButton.extended(
                 heroTag: "getStartedButton",
                 onPressed: () async {
-                  Navigator.pushAndRemoveUntil(context,
-                      MaterialPageRoute(builder: (context) => Wrapper()), (route) => false);
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => Wrapper()),
+                          (route) => false);
                 },
                 elevation: 2.0,
                 label: Text(
@@ -64,4 +67,5 @@ class FirstTimeWelcomeScreen extends StatelessWidget {
       ),
     );
   }
+
 }

@@ -57,59 +57,56 @@ class _CommentsScreenState extends State<CommentsScreen> {
                 ),
               );
 
-              Widget postCommentWidget = Expanded(
-                flex: 0,
-                child: Container(
-                  color: Color.fromRGBO(224, 230, 233, 1),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 8, 0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            decoration: new InputDecoration.collapsed(
-                                hintText: 'Add a comment...'),
-                            controller: commentController,
-                          ),
+              Widget postCommentWidget = Container(
+                color: Color.fromRGBO(224, 230, 233, 1),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 8, 0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          decoration: new InputDecoration.collapsed(
+                              hintText: 'Add a comment...'),
+                          controller: commentController,
                         ),
-                        TextButton(
-                          onPressed: () async {
-                            if (widget.numComments == 0) {
-                              Navigator.pop(context);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CommentsScreen(
-                                          passedInPostId: widget.passedInPostId,
-                                          numComments: 1,
-                                        )),
-                              );
-                            }
-                            showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (context) =>
-                                  Center(child: CircularProgressIndicator()),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          if (widget.numComments == 0) {
+                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CommentsScreen(
+                                        passedInPostId: widget.passedInPostId,
+                                        numComments: 1,
+                                      )),
                             );
-                            CommentsDb commentsDb = new CommentsDb();
-                            bool success = await commentsDb.postComment(
-                                commentController.text, postId);
-                            if (success) {
-                              Navigator.pop(context);
-                              commentController.clear();
-                            } else {
-                              debugPrint("error in posting comment");
-                            }
-                          },
-                          child: Text(
-                            'Post',
-                            style: TextStyle(
-                                color: Color.fromRGBO(101, 171, 200, 1),
-                                fontSize: 16),
-                          ),
+                          }
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) =>
+                                Center(child: CircularProgressIndicator()),
+                          );
+                          CommentsDb commentsDb = new CommentsDb();
+                          bool success = await commentsDb.postComment(
+                              commentController.text, postId);
+                          if (success) {
+                            Navigator.pop(context);
+                            commentController.clear();
+                          } else {
+                            debugPrint("error in posting comment");
+                          }
+                        },
+                        child: Text(
+                          'Post',
+                          style: TextStyle(
+                              color: Color.fromRGBO(101, 171, 200, 1),
+                              fontSize: 16),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               );
@@ -126,7 +123,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                 return Column(
                   children: [
                     commentListWidget,
-                    postCommentWidget,
+                    Expanded(flex: 0, child: postCommentWidget),
                     SizedBox(
                       height: 20,
                     )
