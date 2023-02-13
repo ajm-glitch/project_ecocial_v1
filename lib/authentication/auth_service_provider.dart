@@ -72,4 +72,22 @@ class AuthServiceProvider extends ChangeNotifier {
     await FirebaseAuth.instance.signOut();
     notifyListeners();
   }
+
+  Future<bool> accountDeletion(String email, String password) async {
+    bool answer = false;
+    User? currentUser = FirebaseAuth.instance.currentUser;
+
+    AuthCredential credentials =
+        EmailAuthProvider.credential(email: email, password: password);
+
+    await currentUser?.reauthenticateWithCredential(credentials).then((value) {
+      value.user?.delete().then((response) {
+        //RETURN TO INITIAL SCREEN
+        answer = true;
+      });
+    }).catchError((onError) {
+      answer = false;
+    });
+    return answer;
+  }
 }

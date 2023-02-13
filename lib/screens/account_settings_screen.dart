@@ -60,118 +60,133 @@ class _AccountSettingsState extends State<AccountSettings> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 30),
-              Text('Username:'),
-              SizedBox(height: 20),
-              TextFormField(
-                  controller: usernameController,
-                  decoration: textInputDecoration),
-              SizedBox(height: 40),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(38.0, 14.0, 38.0, 14.0),
-                    child: Container(
-                      child: FloatingActionButton.extended(
-                        heroTag: "saveButton",
-                        onPressed: () async {
-                          String username = usernameController.text;
-                          bool result1 = userDb.pushUsernameToDb(username);
-                          bool result2 = await userDb
-                              .updateUsernameInPreviousPostsDb(username);
-                          if (result1 == true && result2 == true) {
-                            Toast.show("Saved!", duration: Toast.lengthShort);
-                          } else {
-                            debugPrint("error updating username");
-                          }
-                        },
-                        elevation: 2.0,
-                        label: Text(
-                          "Save",
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                        backgroundColor: Color.fromRGBO(90, 155, 115, 1),
-                        foregroundColor: Colors.white,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 40,
-                  ),
-                  Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 30),
+            Text('Username:'),
+            SizedBox(height: 20),
+            TextFormField(
+                controller: usernameController,
+                decoration: textInputDecoration),
+            SizedBox(height: 40),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(38.0, 14.0, 38.0, 14.0),
+                  child: Container(
                     child: FloatingActionButton.extended(
-                      heroTag: "logOutButton",
+                      heroTag: "saveButton",
                       onPressed: () async {
-                        try {
-                          Provider.of<PostNotifier>(context, listen: false)
-                              .closeListener();
-                          Provider.of<MyPostsNotifier>(context, listen: false)
-                              .closeListener();
-                          Provider.of<CommentNotifier>(context, listen: false)
-                              .closeListener();
-                          // Navigator.pop(context);
-
-                          Provider.of<AuthServiceProvider>(context,
-                                  listen: false)
-                              .logOut();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Wrapper()));
-                        } catch (e) {
-                          debugPrint('logging out error: ' + e.toString());
+                        String username = usernameController.text;
+                        bool result1 = userDb.pushUsernameToDb(username);
+                        bool result2 = await userDb
+                            .updateUsernameInPreviousPostsDb(username);
+                        if (result1 == true && result2 == true) {
+                          Toast.show("Saved!", duration: Toast.lengthShort);
+                        } else {
+                          debugPrint("error updating username");
                         }
                       },
                       elevation: 2.0,
                       label: Text(
-                        "Sign out",
+                        "Save",
                         style: TextStyle(
                           fontSize: 18,
                         ),
                       ),
-                      backgroundColor: Colors.white,
-                      foregroundColor: Colors.black,
+                      backgroundColor: Color.fromRGBO(90, 155, 115, 1),
+                      foregroundColor: Colors.white,
                     ),
                   ),
-                  // TextButton(
-                  //   onPressed: () async {
-                  //     final provider = Provider.of<GoogleSignInProvider>(
-                  //         context,
-                  //         listen: false);
-                  //     try {
-                  //       await provider.logOut();
-                  //       Navigator.pop(context);
-                  //     } catch (e) {
-                  //       print('logging out error: ' + e.toString());
-                  //     }
-                  //   },
-                  //   child: Text(
-                  //     'Log out',
-                  //     style: TextStyle(
-                  //       color: Color.fromRGBO(90, 155, 115, 1),
-                  //     ),
-                  //   ),
-                  //   // height: 50,
-                  //   // minWidth: 100,
-                  //   // shape: RoundedRectangleBorder(
-                  //   //     side: BorderSide(
-                  //   //         color: Color.fromRGBO(90, 155, 115, 1),
-                  //   //         width: 2.0,
-                  //   //         style: BorderStyle.solid),
-                  //   //     borderRadius: BorderRadius.circular(50)
-                  //   // ),
-                  // ),
-                ],
-              )
-            ],
-          ),
+                ),
+                SizedBox(
+                  width: 40,
+                ),
+                Container(
+                  child: FloatingActionButton.extended(
+                    heroTag: "logOutButton",
+                    onPressed: () async {
+                      try {
+                        Provider.of<PostNotifier>(context, listen: false)
+                            .closeListener();
+                        Provider.of<MyPostsNotifier>(context, listen: false)
+                            .closeListener();
+                        Provider.of<CommentNotifier>(context, listen: false)
+                            .closeListener();
+                        // Navigator.pop(context);
+
+                        Provider.of<AuthServiceProvider>(context, listen: false)
+                            .logOut();
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Wrapper()));
+                      } catch (e) {
+                        debugPrint('logging out error: ' + e.toString());
+                      }
+                    },
+                    elevation: 2.0,
+                    label: Text(
+                      "Sign out",
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                  ),
+                ),
+                // TextButton(
+                //   onPressed: () async {
+                //     final provider = Provider.of<GoogleSignInProvider>(
+                //         context,
+                //         listen: false);
+                //     try {
+                //       await provider.logOut();
+                //       Navigator.pop(context);
+                //     } catch (e) {
+                //       print('logging out error: ' + e.toString());
+                //     }
+                //   },
+                //   child: Text(
+                //     'Log out',
+                //     style: TextStyle(
+                //       color: Color.fromRGBO(90, 155, 115, 1),
+                //     ),
+                //   ),
+                //   // height: 50,
+                //   // minWidth: 100,
+                //   // shape: RoundedRectangleBorder(
+                //   //     side: BorderSide(
+                //   //         color: Color.fromRGBO(90, 155, 115, 1),
+                //   //         width: 2.0,
+                //   //         style: BorderStyle.solid),
+                //   //     borderRadius: BorderRadius.circular(50)
+                //   // ),
+                // ),
+              ],
+            ),
+            Expanded(child: Container()),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: () async {
+                    print('Deleting');
+                  },
+                  child: Text(
+                    'Delete Account',
+                    style: TextStyle(
+                      color: Colors.red.shade900,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                )
+              ],
+            ),
+          ],
         ),
       ),
     );

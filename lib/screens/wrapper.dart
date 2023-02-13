@@ -29,6 +29,7 @@ class Wrapper extends StatelessWidget {
 
             return HomeFeed();
           } else {
+            return HomeFeed();
             return FutureBuilder<String>(
                 future: SharePreferenceActions().firstTime(),
                 builder: (context, AsyncSnapshot<String> snapshot) {
