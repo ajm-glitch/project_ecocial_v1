@@ -21,8 +21,10 @@ class AccountSettings extends StatefulWidget {
 
 class _AccountSettingsState extends State<AccountSettings> {
   String username = "test";
-  late TextEditingController usernameController =
-      TextEditingController(text: "");
+  late TextEditingController usernameController = TextEditingController(text: "");
+  TextEditingController emailEditingController = TextEditingController();
+  TextEditingController passwordEditingController = TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   initState() {
@@ -50,6 +52,7 @@ class _AccountSettingsState extends State<AccountSettings> {
     UserDb userDb = new UserDb();
     // setUsername();
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text(
           'Account Settings',
@@ -178,11 +181,36 @@ class _AccountSettingsState extends State<AccountSettings> {
                       barrierDismissible: true,
                       builder: (BuildContext context) {
                         return CustomRoundDialogWidget(
-                          noPadding: true,
+                          noPadding: false,
                           horizontalPadding: 20,
-                          displayedText: 'dialog',
-                          dialogContentWidget: Text('SOMETHING'),
-                          onlyCloseOption: true,
+                          displayedText: 'Account Deletion',
+                          dialogContentWidget: accountDeletionWidget(),
+                          onlyCloseOption: false,
+                          submitText: "Delete account",
+                          submitFunction: () async {
+                            try {
+                              Provider.of<PostNotifier>(context, listen: false)
+                                  .closeListener();
+                              Provider.of<MyPostsNotifier>(context, listen: false)
+                                  .closeListener();
+                              Provider.of<CommentNotifier>(context, listen: false)
+                                  .closeListener();
+                              final provider = Provider.of<AuthServiceProvider>(context, listen: false);
+                              bool successful = await provider.accountDeletion(emailEditingController.text);
+                              if (successful) {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) => Wrapper()));
+                              }
+                              else {
+                                Navigator.pop(context);
+                                _scaffoldKey.currentState!.showBottomSheet((context) => Text("Unable to delete account",
+                                  textAlign: TextAlign.center,));
+                              }
+                            } catch (e) {
+                              debugPrint('logging out error: ' + e.toString());
+                            }
+                          },
+                          closeText: "Cancel",
                         );
                       },
                     );
@@ -202,6 +230,26 @@ class _AccountSettingsState extends State<AccountSettings> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget accountDeletionWidget() {
+    return Column(
+      children: [
+        Text('Email:'),
+        SizedBox(height: 20),
+        TextFormField(
+            controller: emailEditingController,
+            decoration: textInputDecoration),
+        SizedBox(height: 20),
+        // Text('Password:'),
+        // SizedBox(height: 20),
+        // TextFormField(
+        //     controller: passwordEditingController,
+        //     obscureText: true,
+        //     decoration: textInputDecoration),
+        // SizedBox(height: 20),
+      ],
     );
   }
 

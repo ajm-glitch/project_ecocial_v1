@@ -73,21 +73,29 @@ class AuthServiceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> accountDeletion(String email, String password) async {
+  Future<bool> accountDeletion(String email) async {
+    // print("email: " + email);
+
     bool answer = false;
     User? currentUser = FirebaseAuth.instance.currentUser;
 
-    AuthCredential credentials =
-        EmailAuthProvider.credential(email: email, password: password);
-
-    await currentUser?.reauthenticateWithCredential(credentials).then((value) {
-      value.user?.delete().then((response) {
-        //RETURN TO INITIAL SCREEN
+    if (currentUser?.email == email) {
+      //DELETE USER
+      await currentUser?.delete().then((value) async {
+        if (currentUser.providerData[0].providerId == 'google.com') {
+          await googleSignIn.disconnect();
+        }
+        print("deleting successful");
         answer = true;
+      }).catchError((e) {
+        print(e);
+        print("deleting failed");
+        answer = false;
       });
-    }).catchError((onError) {
-      answer = false;
-    });
+    }
+    print("answer: $answer");
+    await FirebaseAuth.instance.signOut();
+    notifyListeners();
     return answer;
   }
 }

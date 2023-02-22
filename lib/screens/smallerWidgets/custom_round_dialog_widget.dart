@@ -53,37 +53,17 @@ class _CustomRoundDialogWidgetState extends State<CustomRoundDialogWidget> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Row(
-                      children: [
-                        Expanded(child: Container()),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            widget.displayedText,
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontFamily: 'komikax',
-                              color: (Colors.black87),
-                              // fontWeight: FontWeight.bold
-                            ),
-                          ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5.0),
+                      child: Text(
+                        widget.displayedText,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: (Colors.black87),
+                          // fontWeight: FontWeight.bold
                         ),
-                        Expanded(child: Container()),
-                        TextButton(
-                          // focusNode: widget.focusNodes?[2],
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text(
-                            'X',
-                            style: TextStyle(
-                                fontSize: 25,
-                                color: Colors.red.shade700,
-                                fontFamily: 'komikax',
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )
-                      ],
+                      ),
                     ),
                     const Divider(
                       thickness: 1,
@@ -99,59 +79,61 @@ class _CustomRoundDialogWidgetState extends State<CustomRoundDialogWidget> {
                     // const SizedBox(
                     //   height: 10,
                     // ),
-                    widget.onlyCloseOption
-                        ? Container()
-                        : Column(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              widget.onlyCloseOption
+                                  ? Container()
+                                  : Row(
+                                    children: [
+                                      ElevatedButton(
+                                      onPressed: () {
+                                        if (widget.submitFunction != null) {
+                                          bool success = widget.submitFunction!();
+
+                                          if (success) {
+                                            Navigator.pop(context);
+                                          }
+                                        } else if (widget.updateFunction != null) {
+                                          bool success = widget
+                                              .updateFunction!(widget.documentID);
+
+                                          if (success) {
+                                            Navigator.pop(context);
+                                          }
+                                        }
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Color.fromRGBO(
+                                            160, 38, 42, 1.0),
+                                        foregroundColor: Colors.white,
+                                      ),
+                                      child: Text(widget.submitText,
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                        ),)),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                    ],
+                                  ),
                               ElevatedButton(
                                   onPressed: () {
-                                    if (widget.submitFunction != null) {
-                                      bool success = widget.submitFunction!();
-
-                                      if (success) {
-                                        Navigator.pop(context);
-                                      }
-                                    } else if (widget.updateFunction != null) {
-                                      bool success = widget
-                                          .updateFunction!(widget.documentID);
-
-                                      if (success) {
-                                        Navigator.pop(context);
-                                      }
-                                    }
+                                    Navigator.pop(context);
                                   },
-                                  child: Text(widget.submitText)),
-                              // CustomGradientButtonWidget(
-                              //   fontSize: 15.sp,
-                              //   onPressMethod: () {
-                              //     if (widget.submitFunction != null) {
-                              //       bool success = widget.submitFunction!();
-                              //
-                              //       if (success) {
-                              //         Navigator.pop(context);
-                              //       }
-                              //     } else if (widget.updateFunction != null) {
-                              //       bool success = widget
-                              //           .updateFunction!(widget.documentID);
-                              //
-                              //       if (success) {
-                              //         Navigator.pop(context);
-                              //       }
-                              //     }
-                              //   },
-                              //   buttonColorList: [
-                              //     Colors.red.shade900,
-                              //     Colors.redAccent
-                              //   ],
-                              //   horizontalTextPadding: 5.w,
-                              //   linearGradient: true,
-                              //   displayedText: widget.submitText,
-                              // ),
-                              const SizedBox(
-                                height: 30,
-                              ),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Color.fromRGBO(90, 155, 115, 1),
+                                    foregroundColor: Colors.white,
+                                  ),
+                                  child: Text(widget.closeText,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                    ),)),
                             ],
                           ),
+                    const SizedBox(
+                      height: 30,
+                    ),
                   ],
                 ),
               ),
