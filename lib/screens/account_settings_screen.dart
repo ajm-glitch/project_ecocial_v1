@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_ecocial/database/user_db.dart';
 import 'package:project_ecocial/screens/smallerWidgets/constants.dart';
+import 'package:project_ecocial/screens/smallerWidgets/custom_round_dialog_widget.dart';
 import 'package:project_ecocial/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
@@ -172,7 +173,19 @@ class _AccountSettingsState extends State<AccountSettings> {
               children: [
                 TextButton(
                   onPressed: () async {
-                    print('Deleting');
+                    showDialog(
+                      context: context,
+                      barrierDismissible: true,
+                      builder: (BuildContext context) {
+                        return CustomRoundDialogWidget(
+                          noPadding: true,
+                          horizontalPadding: 20,
+                          displayedText: 'dialog',
+                          dialogContentWidget: Text('SOMETHING'),
+                          onlyCloseOption: true,
+                        );
+                      },
+                    );
                   },
                   child: Text(
                     'Delete Account',
