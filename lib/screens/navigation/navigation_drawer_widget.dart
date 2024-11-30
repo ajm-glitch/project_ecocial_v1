@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project_ecocial/screens/account_settings_screen.dart';
 
 class NavigationDrawerWidget extends StatefulWidget {
   const NavigationDrawerWidget({Key? key}) : super(key: key);

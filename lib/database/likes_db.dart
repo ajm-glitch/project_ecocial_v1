@@ -5,7 +5,7 @@ class LikesDb {
 
   Future<bool> checkLiked(String? uid, String postId) async {
     isLiked = false;
-    DatabaseReference realtimeDb = FirebaseDatabase.instance.reference();
+    DatabaseReference realtimeDb = FirebaseDatabase.instance.ref();
     var ref = realtimeDb.child('posts').child(postId).child('likedUids');
 
     DataSnapshot datasnapshot = await ref.get();
@@ -25,7 +25,7 @@ class LikesDb {
   }
 
   void likeSetter(String postId, String? uid) async {
-    DatabaseReference realtimeDb = FirebaseDatabase.instance.reference();
+    DatabaseReference realtimeDb = FirebaseDatabase.instance.ref();
     var ref = realtimeDb.child('posts').child(postId).child('likedUids');
     DataSnapshot datasnapshot = await ref.get();
     if (datasnapshot.value == null) {
@@ -56,10 +56,10 @@ class LikesDb {
 
   bool addLike(String? uid, String postId) {
     bool success = false;
-    final databaseRef = FirebaseDatabase.instance.reference();
-    var ref = databaseRef.child('posts').child(postId).child('likedUids');
-    String key = ref.push().key;
-    ref.push().update({
+    final databaseRef = FirebaseDatabase.instance.ref();
+    var reference = databaseRef.child('posts').child(postId).child('likedUids');
+    // String key = reference.push().key;
+    reference.push().update({
       'uid': uid,
     });
     return success;
@@ -67,7 +67,7 @@ class LikesDb {
 
   Future<bool> removeLike(String? uid, String postId) async {
     bool success = false;
-    final databaseRef = FirebaseDatabase.instance.reference();
+    final databaseRef = FirebaseDatabase.instance.ref();
     var ref = databaseRef.child('posts').child(postId).child('likedUids');
     // String keyToBeRemoved = "";
     DataSnapshot datasnapshot = await ref.get();
@@ -88,7 +88,7 @@ class LikesDb {
 
   Future<int> getNumLikes(String postId) async {
     int numLikes = 0;
-    final databaseRef = FirebaseDatabase.instance.reference();
+    final databaseRef = FirebaseDatabase.instance.ref();
     var ref = databaseRef.child('posts').child(postId).child('likedUids');
     DataSnapshot datasnapshot = await ref.get();
     if (datasnapshot.value == null) {

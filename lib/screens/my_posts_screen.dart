@@ -1,9 +1,10 @@
+import 'package:project_ecocial/screens/smallerWidgets/postCard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project_ecocial/controllers/controller_instance.dart';
-import 'package:project_ecocial/database/notifiers/my_posts_notifier.dart';
-import 'package:project_ecocial/screens/smallerWidgets/postCard.dart';
 import 'package:provider/provider.dart';
+
+import '../controllers/controller_instance.dart';
+import '../database/notifiers/my_posts_notifier.dart';
 
 // bool noMyPostsAvailable = false;
 

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project_ecocial/database/comments_db.dart';
 
+import '../../database/comments_db.dart';
 import '../../database/likes_db.dart';
 import '../../models/post_model.dart';
 import '../comments_screen.dart';
@@ -89,6 +89,7 @@ class _PostReactionsWidgetState extends State<PostReactionsWidget> {
         ),
         IconButton(
           onPressed: () {
+            print(widget.postData.id);
             Navigator.push(
               context,
               MaterialPageRoute(

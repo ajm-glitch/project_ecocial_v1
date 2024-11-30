@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 import '../models/post_model.dart';
 
@@ -22,6 +20,7 @@ class HomePostController extends GetxController {
   }
 
   void updatePostList(List<PostModel> newList) {
+    print('UPDATE: ${newList.length}');
     _postList.value = newList;
   }
 

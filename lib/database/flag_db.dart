@@ -1,9 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class FlagDb {
 
-  final databaseRef = FirebaseDatabase.instance.reference();
+  final databaseRef = FirebaseDatabase.instance.ref();
 
   Future<bool> flagPost(String uid, String postId, String content) async {
     bool success = false;

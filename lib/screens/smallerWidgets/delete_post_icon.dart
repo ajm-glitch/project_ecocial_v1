@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:project_ecocial/controllers/controller_instance.dart';
 import 'package:toast/toast.dart';
 
+import '../../controllers/controller_instance.dart';
 import '../../database/delete_post_db.dart';
+import '../my_posts_screen.dart';
 
 Widget deletePostWidget(BuildContext context, postId) {
   IconButton deletePostIcon = IconButton(
@@ -26,15 +27,14 @@ _showDeleteAlertDialog(BuildContext context, String postId) {
   );
   Widget yesButton = TextButton(
     onPressed: () async {
-      // showDialog(
-      //   context: context,
-      //   barrierDismissible: false,
-      //   builder: (context) => Center(), // child: CircularProgressIndicator()
-      // );
-      // Navigator.pop(context);
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => Center(), // child: CircularProgressIndicator()
+      );
       Navigator.pop(context);
-      // Navigator.pushNamed(context, '/my_posts_screen');
-      DeletePostDb deletePostDb = DeletePostDb();
+      Navigator.pop(context);
+      DeletePostDb deletePostDb = new DeletePostDb();
       bool success = await deletePostDb.deletePost(postId);
       if (success) {
         final currentUser = FirebaseAuth.instance.currentUser;
@@ -42,16 +42,14 @@ _showDeleteAlertDialog(BuildContext context, String postId) {
         bool myPostsExist = await anyMyPostsExist(uid!);
         if (!myPostsExist) {
           Navigator.pop(context);
-          Navigator.pop(context);
           // noMyPostsAvailable = true;
           myPostController.updateAvailablePost(true);
-          // Navigator.push(context,
-          //     MaterialPageRoute(builder: (context) => MyPostsScreen()));
-          // Navigator.pushNamed(context, '/my_posts_screen');
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => MyPostsScreen()));
         }
       } else {
         Toast.show("Unable to delete post!", duration: Toast.lengthShort);
-        debugPrint('error in deleting post');
+        print('error in deleting post');
       }
     },
     child: Text("Yes"),
@@ -78,9 +76,9 @@ _showDeleteAlertDialog(BuildContext context, String postId) {
 }
 
 Future<bool> anyMyPostsExist(String uid) async {
-  final _dbReference = FirebaseDatabase.instance.reference();
+  final _dbReference = FirebaseDatabase.instance.ref();
   DataSnapshot snapshot =
       await _dbReference.child("users").child(uid).child("postIds").get();
-
+  print(snapshot.value.toString());
   return snapshot.value != null;
 }

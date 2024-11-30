@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:project_ecocial/models/post_model.dart';
 import 'package:project_ecocial/screens/smallerWidgets/post_content.dart';
 import 'package:project_ecocial/screens/smallerWidgets/post_reactions_widget.dart';
+import 'package:flutter/material.dart';
+
+import '../../models/post_model.dart';
 
 class PostCard extends StatefulWidget {
   final PostModel postData;

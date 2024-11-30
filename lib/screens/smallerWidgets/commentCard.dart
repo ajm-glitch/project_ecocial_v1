@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_ecocial/models/comment_model.dart';
+import '../../models/comment_model.dart';
 import 'flagIconForComment.dart';
 
 class CommentCard extends StatelessWidget {

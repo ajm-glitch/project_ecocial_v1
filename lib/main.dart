@@ -1,20 +1,19 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:project_ecocial/database/notifiers/my_posts_notifier.dart';
-import 'package:project_ecocial/database/notifiers/post_notifier.dart';
 import 'package:project_ecocial/screens/account_settings_screen.dart';
 import 'package:project_ecocial/screens/create_post_screen.dart';
 import 'package:project_ecocial/screens/my_posts_screen.dart';
 import 'package:project_ecocial/screens/wrapper.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
-import 'authentication/auth_service_provider.dart';
+import 'authentication/google_sign_in_provider.dart';
 import 'controllers/controller_instance.dart';
 import 'controllers/data_manager_controller.dart';
 import 'database/notifiers/comment_notifier.dart';
+import 'database/notifiers/my_posts_notifier.dart';
+import 'database/notifiers/post_notifier.dart';
 import 'screens/home_feed_screen.dart';
 
 Future<void> main() async {
@@ -32,7 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AuthServiceProvider()),
+        ChangeNotifierProvider(create: (_) => GoogleSignInProvider()),
         ChangeNotifierProvider(create: (_) => PostNotifier()),
         ChangeNotifierProvider(create: (_) => MyPostsNotifier()),
         ChangeNotifierProvider(create: (_) => CommentNotifier()),

@@ -1,14 +1,15 @@
+import 'package:project_ecocial/screens/sign_up_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project_ecocial/screens/home_feed_screen.dart';
-import 'package:project_ecocial/screens/sign_up_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../database/notifiers/comment_notifier.dart';
 import '../database/notifiers/my_posts_notifier.dart';
 import '../database/notifiers/post_notifier.dart';
 import '../services/share_preferences.dart';
+import 'comments_screen.dart';
 import 'first_time_welcome_screen.dart';
+import 'home_feed_screen.dart';
 
 class Wrapper extends StatelessWidget {
   bool firstTimer = false;
@@ -18,18 +19,21 @@ class Wrapper extends StatelessWidget {
       body: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
+          print(
+              'WRAPPER CALLED: ${snapshot}, ${snapshot.data}, ${snapshot.connectionState}');
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasData) {
+            print('NOT NULL');
             Provider.of<PostNotifier>(context, listen: false).listenToPosts();
             Provider.of<MyPostsNotifier>(context, listen: false)
                 .listenToPosts();
             Provider.of<CommentNotifier>(context, listen: false)
-                .listenToComments();
+                .listenToComments(postId);
 
             return HomeFeed();
           } else {
-            // return HomeFeed();
+            print('NULL');
             return FutureBuilder<String>(
                 future: SharePreferenceActions().firstTime(),
                 builder: (context, AsyncSnapshot<String> snapshot) {

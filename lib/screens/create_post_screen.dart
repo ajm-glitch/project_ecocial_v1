@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:project_ecocial/screens/smallerWidgets/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:project_ecocial/database/posting_db.dart';
-import 'package:project_ecocial/database/user_db.dart';
-import 'package:project_ecocial/screens/smallerWidgets/constants.dart';
 
 import '../controllers/controller_instance.dart';
+import '../database/posting_db.dart';
+import '../database/user_db.dart';
 
 class CreatePostScreen extends StatefulWidget {
   const CreatePostScreen({Key? key}) : super(key: key);
@@ -48,7 +48,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
         this.imageFile = realFile;
       });
     } on PlatformException catch (e) {
-      debugPrint("Failed to pick image: $e");
+      print("Failed to pick image: $e");
     }
   }
 
@@ -247,7 +247,7 @@ _showSuccessAlertDialog(BuildContext context) {
         Navigator.pop(context);
         // Navigator.pushNamed(context, '/home_screen');
         Navigator.pop(context);
-        Navigator.pushNamed(context, '/home_screen');
+        // Navigator.pushNamed(context, '/home_screen');
       },
       icon: Icon(
         Icons.close,

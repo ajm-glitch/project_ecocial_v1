@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../../authentication/auth_service_provider.dart';
+import '../../authentication/google_sign_in_provider.dart';
+import '../../database/notifiers/my_posts_notifier.dart';
 
 class GoogleSignUpButtonWidget extends StatelessWidget {
   const GoogleSignUpButtonWidget({Key? key}) : super(key: key);
@@ -13,9 +14,9 @@ class GoogleSignUpButtonWidget extends StatelessWidget {
       child: FloatingActionButton.extended(
         onPressed: () async {
           final provider =
-              Provider.of<AuthServiceProvider>(context, listen: false);
-          await provider.googleLogIn();
-          // Provider.of<MyPostsNotifier>(context, listen: false).listenToPosts();
+              Provider.of<GoogleSignInProvider>(context, listen: false);
+          await provider.logIn();
+          Provider.of<MyPostsNotifier>(context, listen: false).listenToPosts();
         },
         elevation: 2.0,
         label: Text(

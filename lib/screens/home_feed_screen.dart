@@ -1,10 +1,10 @@
+import 'package:project_ecocial/screens/smallerWidgets/postCard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project_ecocial/controllers/controller_instance.dart';
-import 'package:project_ecocial/database/notifiers/post_notifier.dart';
-import 'package:project_ecocial/screens/smallerWidgets/postCard.dart';
 import 'package:provider/provider.dart';
 
+import '../controllers/controller_instance.dart';
+import '../database/notifiers/post_notifier.dart';
 import '../models/post_model.dart';
 import 'navigation/navigation_drawer_widget.dart';
 
@@ -54,6 +54,7 @@ class _HomeFeedState extends State<HomeFeed> {
           ? noPosts
           : Consumer<PostNotifier>(
               builder: (context, model, child) {
+                print('OBSERVABLE UPDATED: ${homePostController.postCount}');
                 return Column(
                   children: [
                     Expanded(
@@ -74,6 +75,7 @@ class _HomeFeedState extends State<HomeFeed> {
   }
 
   Widget loadPost(PostModel post) {
+    print('LOADPOST: ${post.title}');
     return PostCard(
       postData: post,
       isMyPost: false,

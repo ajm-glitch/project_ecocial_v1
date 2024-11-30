@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:project_ecocial/models/post_model.dart';
+
+import '../models/post_model.dart';
 
 class PostingDb {
   late List<String> postIds;
@@ -13,7 +14,7 @@ class PostingDb {
   late String imagePath = "";
 
   final databaseRef =
-      FirebaseDatabase.instance.reference(); //database reference object
+      FirebaseDatabase.instance.ref(); //database reference object
 
   PostingDb(File? imageFile) {
     if (imageFile != null) {
@@ -29,7 +30,7 @@ class PostingDb {
     var postedId = "";
     try {
       var justPosted = postRef.push();
-      postedId = justPosted.key;
+      postedId = justPosted.key!;
       if (imageFileExists) {
         //await compressImage(postedId);
         this.imagePath = await uploadImage(imageFile, postedId);
@@ -103,11 +104,27 @@ class PostingDb {
     final userRef = databaseRef.child('users').child(id!).child('postIds');
     DataSnapshot dataSnapshot = await userRef.get();
     var data = dataSnapshot.value;
-    if (data == null) {
-      return [];
+
+    // Check if data is a List and cast it
+    if (data != null && data is List) {
+      return List<Object?>.from(data); // Explicitly cast to List<Object?>
     }
-    return data;
+
+    // If data is null or not a List, return an empty list
+    return [];
   }
+
+  // Future<List<Object?>> getPostIdListFromDb() async {
+  //   final currentUser = FirebaseAuth.instance.currentUser;
+  //   String? id = currentUser?.uid;
+  //   final userRef = databaseRef.child('users').child(id!).child('postIds');
+  //   DataSnapshot dataSnapshot = await userRef.get();
+  //   var data = dataSnapshot.value;
+  //   if (data == null) {
+  //     return [];
+  //   }
+  //   return data;
+  // }
 
   // compressImage(String postId) async {
   //   final tempDir = await getTemporaryDirectory();
