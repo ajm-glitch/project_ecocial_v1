@@ -89,7 +89,6 @@ class _PostReactionsWidgetState extends State<PostReactionsWidget> {
         ),
         IconButton(
           onPressed: () {
-            print(widget.postData.id);
             Navigator.push(
               context,
               MaterialPageRoute(
