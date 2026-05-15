@@ -95,4 +95,4 @@ This project is licensed under the [GNU General Public License v3.0](LICENSE).
 
 ## About
 
-Created by **Anjani Mirchandani** ([@ajm-glitch](https://github.com/ajm-glitch)) as a solo project from conception to App Store launch, self-teaching Flutter, Dart, and Firebase along the way.
+Created by **Anjani Mirchandani** ([@ajm-glitch](https://github.com/ajm-glitch)) as a solo project from conception to launch, self-teaching Flutter, Dart, and Firebase along the way.
